@@ -1,0 +1,9 @@
+This directory contains images for course thumbnails.
+
+Required images:
+- javascript.jpg
+- html-css.jpg
+- python.jpg
+- frameworks.jpg
+
+Please add these images to make the course cards display correctly.

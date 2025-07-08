@@ -1,0 +1,350 @@
+/* --- Course Card Base Styles (Grid View Default) --- */
+.course-card-wrapper {
+	/* Wraps the card, handles grid column classes */
+	display: flex;
+	/* Helps with height consistency if needed */
+}
+
+.course-card {
+	background-color: #fff;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+		/* Slightly softer shadow */
+		transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+		/* Crucial for consistent height in grid rows */
+			position: relative;
+			/* Needed for stretched-link */
+}
+
+.course-card:hover {
+	transform: translateY(-4px);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* --- Card Image --- */
+.course-image {
+	position: relative;
+	width: 100%;
+		padding-top: 56.25%;
+		/* 16:9 Aspect Ratio */
+	overflow: hidden;
+	background-color: #eee;
+		/* Placeholder background */
+}
+
+.course-image img {
+	position: absolute;
+		top: 0;
+		left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+		/* Cover the area, might crop */
+			transition: transform 0.3s ease;
+		}
+
+		.course-card:hover .course-image img {
+			transform: scale(1.03);
+			/* Subtle zoom on hover */
+}
+
+.difficulty-badge {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+		padding: 4px 8px;
+		/* Slightly more padding */
+		font-size: 0.75rem;
+		font-weight: 500;
+		/* Medium weight */
+			border-radius: 4px;
+			color: #fff;
+			text-transform: capitalize;
+			z-index: 2;
+			/* Above image */
+			line-height: 1;
+}
+/* Badge Colors (Example - Adjust to your theme) */
+.difficulty-badge.beginner {
+	background-color: rgba(40, 167, 69, 0.9);
+}
+
+/* Green */
+.difficulty-badge.intermediate {
+	background-color: rgba(255, 193, 7, 0.9);
+		color: #333;
+}
+
+/* Yellow */
+.difficulty-badge.advanced {
+	background-color: rgba(220, 53, 69, 0.9);
+}
+
+/* Red */
+.difficulty-badge.unknown {
+	background-color: rgba(108, 117, 125, 0.9);
+}
+
+/* Grey */
+
+
+/* --- Card Content --- */
+.course-content {
+	padding: 0.8rem 1rem;
+		/* Adjust padding */
+		flex-grow: 1;
+		/* Take remaining vertical space */
+	display: flex;
+	flex-direction: column;
+		/* Stack content vertically */
+}
+
+.course-title {
+	font-size: 1rem;
+	/* Slightly smaller title */
+	font-weight: 600;
+	margin-bottom: 0.4rem;
+	/* Limit title lines */
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-height: 2.4em;
+	/* Approx height for 2 lines */
+	color: var(--text-dark);
+	/* Use theme variable if available */
+}
+
+.course-description {
+	font-size: 0.85rem;
+	color: #6c757d;
+	/* Muted text */
+	margin-bottom: 0.8rem;
+	/* More space before meta */
+	flex-grow: 1;
+	/* Push meta/button down */
+	/* Limit description lines */
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+		/* Limit to 3 lines */
+		-webkit-box-orient: vertical;
+			overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.course-meta {
+	display: flex;
+	justify-content: space-between;
+		font-size: 0.8rem;
+		color: #6c757d;
+		margin-bottom: 0.8rem;
+		/* Space before progress/button */
+		flex-wrap: wrap;
+		/* Allow wrapping on small cards */
+			gap: 0.5rem;
+}
+
+.course-meta span {
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.course-meta .material-icons {
+	font-size: 1rem;
+		/* Smaller icons */
+		margin-right: 4px;
+		vertical-align: middle;
+}
+
+.course-content .btn {
+	margin-top: auto;
+	/* Push button to bottom */
+		align-self: flex-start;
+		/* Align button left */
+		/* Use btn-sm for smaller button */
+}
+
+/* --- Horizontal Scroll for Continue Learning Section --- */
+.position-relative {
+	position: relative;
+}
+
+.horizontal-scroll-wrapper {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	padding: 10px 0;
+}
+
+.horizontal-scroll {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	/* Firefox */
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	gap: 20px;
+	padding: 5px 2px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+	display: none;
+	/* Chrome, Safari, Opera */
+}
+
+.horizontal-scroll .course-card-wrapper {
+	flex: 0 0 300px;
+	/* Fixed width for cards in horizontal scroll */
+	max-width: 300px;
+	margin-bottom: 0;
+}
+
+/* Scroll buttons */
+.scroll-buttons {
+	position: absolute;
+	width: 100%;
+	height: 0;
+	top: 50%;
+	z-index: 10;
+}
+
+.scroll-btn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(255, 255, 255, 0.9);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+	border: none;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	z-index: 2;
+}
+
+.scroll-btn:hover {
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-btn.left {
+	left: -10px;
+}
+
+.scroll-btn.right {
+	right: -10px;
+}
+/* --- List View Specific Styles --- */
+
+.courses-list-view .course-card-wrapper {
+	margin-bottom: 1rem;
+	/* Space between list items */
+	width: 100%;
+	/* <<< ADDED: Ensure wrapper takes full width */
+}
+
+.courses-list-view .course-card {
+	flex-direction: row;
+	/* Image and content side-by-side */
+	height: auto;
+	/* Height determined by content */
+	width: 100%;
+	/* <<< ADDED: Make card take full width of wrapper */
+}
+
+.courses-list-view .course-image {
+	flex: 0 0 200px;
+	/* Fixed width for image container */
+	max-width: 35%;
+	/* Max width relative to card */
+	padding-top: 0;
+	/* Remove aspect ratio padding */
+	height: auto;
+	/* Let image determine height */
+	position: relative;
+	/* Keep for absolute positioned img */
+}
+
+.courses-list-view .course-image img {
+	position: relative;
+	/* Override absolute positioning */
+	height: auto;
+	/* Natural image height */
+	min-height: 120px;
+	/* Minimum height */
+	width: 100%;
+	/* Ensure image fills its container width */
+	object-fit: cover;
+	/* Maintain aspect ratio within container */
+}
+
+.courses-list-view .difficulty-badge {
+	/* Adjust position if needed for list view */
+	top: 8px;
+	left: 8px;
+}
+
+.courses-list-view .course-content {
+	padding: 1rem 1.2rem;
+	/* More horizontal padding */
+	flex-grow: 1;
+}
+
+.courses-list-view .course-title {
+	min-height: auto;
+	/* Remove min-height */
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+}
+
+.courses-list-view .course-description {
+	-webkit-line-clamp: 4;
+	line-clamp: 4;
+	/* Allow more lines in list view */
+	flex-grow: 0;
+	/* Don't let description push button too far */
+	margin-bottom: 1rem;
+}
+.courses-list-view .course-meta {
+	margin-bottom: 1rem;
+	justify-content: flex-start;
+	/* Align meta items left */
+	gap: 1rem;
+	/* More space between meta items */
+}
+
+.courses-list-view .course-content .btn {
+	margin-top: 1rem;
+	/* Ensure space above button */
+	align-self: flex-start;
+}
+.courses-list-view .progress-bar-container {
+	margin-top: 1rem;
+	/* Space above progress */
+}
+/* Also ensure image fills its container in list view */
+.courses-list-view .course-image img {
+	position: relative;
+	height: 100%;
+	/* Fill height of container */
+	width: 100%;
+	/* Fill width of container */
+	object-fit: cover;
+	/* Cover area */
+	min-height: 120px;
+}

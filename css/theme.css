@@ -1,0 +1,133 @@
+/* Theme variables */
+:root {
+	--primary-color: #1565c0;
+	--secondary-color: #0288d1;
+	--text-color: #333333;
+	--bg-color: #f9fafb;
+	--card-bg: #ffffff;
+	--card-border: #e0e0e0;
+	--input-bg: #ffffff;
+	--input-border: #ced4da;
+	--header-gradient-start: #1565c0;
+	--header-gradient-end: #0d47a1;
+	--success-color: #28a745;
+	--warning-color: #ffc107;
+	--danger-color: #dc3545;
+	--info-color: #17a2b8;
+}
+
+/* Dark theme */
+body.theme-dark {
+	--primary-color: #4285f4;
+	--secondary-color: #2196f3;
+	--text-color: #e0e0e0;
+	--bg-color: #121212;
+	--card-bg: #1e1e1e;
+	--card-border: #333333;
+	--input-bg: #2d2d2d;
+	--input-border: #444444;
+	--header-gradient-start: #1a237e;
+	--header-gradient-end: #0d47a1;
+}
+
+/* Apply theme variables */
+body {
+	color: var(--text-color);
+	background-color: var(--bg-color);
+	transition: background-color 0.3s, color 0.3s;
+}
+
+/* Accessibility - increased line spacing */
+body.increased-line-spacing {
+	line-height: 1.8;
+}
+
+body.increased-line-spacing p {
+	margin-bottom: 1.5rem;
+}
+
+/* Card styling with theme variables */
+.card,
+.settings-card,
+.course-card {
+	background-color: var(--card-bg);
+	border-color: var(--card-border);
+}
+
+/* Input styling with theme variables */
+.form-control,
+.form-select {
+	background-color: var(--input-bg);
+	border-color: var(--input-border);
+	color: var(--text-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+	background-color: var(--input-bg);
+	color: var(--text-color);
+}
+
+/* Header gradient using theme variables */
+header {
+	background: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
+}
+
+/* Button primary color from theme */
+.btn-primary {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+	background-color: var(--secondary-color);
+	border-color: var(--secondary-color);
+}
+
+/* Focus mode styles */
+body.focus-mode .sidebar,
+body.focus-mode .non-essential {
+	display: none !important;
+}
+
+body.focus-mode main {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+body.focus-mode .course-content {
+	font-size: 1.05rem;
+}
+
+/* OpenDyslexic font loading */
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url('../assets/fonts/OpenDyslexic-Regular.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url('../assets/fonts/OpenDyslexic-Bold.otf') format('opentype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+/* Media query for dark mode preference */
+@media (prefers-color-scheme: dark) {
+	body.theme-system {
+		--primary-color: #4285f4;
+		--secondary-color: #2196f3;
+		--text-color: #e0e0e0;
+		--bg-color: #121212;
+		--card-bg: #1e1e1e;
+		--card-border: #333333;
+		--input-bg: #2d2d2d;
+		--input-border: #444444;
+		--header-gradient-start: #1a237e;
+		--header-gradient-end: #0d47a1;
+	}
+}

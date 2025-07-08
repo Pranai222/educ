@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Profile - eVidya Learning</title>
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<!-- Google Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- Chart.js for analytics -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<!-- jsPDF for PDF generation -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="../css/enhanced-buttons.css" />
+		<style>
+			.profile-section {
+				background: white;
+				border-radius: 12px;
+				padding: 2rem;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+				margin-bottom: 2rem;
+			}
+
+			.profile-header {
+				display: flex;
+				align-items: center;
+				margin-bottom: 2rem;
+			}
+
+			.profile-avatar {
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				background-color: var(--primary-color);
+				color: white;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 2.5rem;
+				margin-right: 1.5rem;
+			}
+
+			.progress-stats {
+				background: #f8f9fa;
+				border-radius: 8px;
+				padding: 1.5rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.analytics-card {
+				background: #fff;
+				border-radius: 8px;
+				padding: 1rem;
+				margin-bottom: 1rem;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+				transition: transform 0.2s;
+				height: 100%;
+			}
+
+			.analytics-card:hover {
+				transform: translateY(-3px);
+			}
+
+			.course-progress-list {
+				list-style: none;
+				padding: 0;
+			}
+
+			.course-progress-item {
+				padding: 1rem;
+				border-radius: 8px;
+				background: #f8f9fa;
+				margin-bottom: 1rem;
+				transition: transform 0.2s;
+			}
+
+			.course-progress-item:hover {
+				transform: translateY(-3px);
+				background: #edf2ff;
+			}
+
+			.progress {
+				height: 8px;
+				margin-top: 0.5rem;
+			}
+
+			.navbar-nav .dropdown-menu {
+				z-index: 9999 !important;
+				position: absolute !important;
+			}
+
+			/* Additional fix for dropdown positioning */
+			.dropdown {
+				position: static;
+			}
+
+			.dropdown-menu {
+				position: absolute !important;
+				z-index: 9999;
+			}
+
+			/* User onboarding modal */
+			.onboarding-modal .modal-content {
+				border-radius: 15px;
+				border: none;
+			}
+
+			.onboarding-modal .modal-header {
+				border-bottom: none;
+				padding-bottom: 0;
+			}
+
+			.onboarding-modal .modal-footer {
+				border-top: none;
+				padding-top: 0;
+			}
+
+			.onboarding-step {
+				display: none;
+			}
+
+			.onboarding-step.active {
+				display: block;
+			}
+
+			/* Report card section */
+			.report-card-preview {
+				border: 1px dashed #ddd;
+				padding: 20px;
+				background-color: #f9f9f9;
+				border-radius: 8px;
+			}
+
+			.analytics-metrics {
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			.metric-card {
+				background: #fff;
+				border-radius: 8px;
+				padding: 1rem;
+				margin: 0.5rem;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+				flex: 1;
+				min-width: 150px;
+				text-align: center;
+			}
+
+			.metric-value {
+				font-size: 2rem;
+				font-weight: bold;
+				color: var(--primary-color);
+			}
+
+			.metric-label {
+				color: #777;
+				font-size: 0.9rem;
+			}
+
+			.chart-container {
+				position: relative;
+				height: 250px;
+				margin-bottom: 1.5rem;
+			}
+
+			/* File upload styling */
+			.file-upload {
+				position: relative;
+				overflow: hidden;
+				margin: 10px 0;
+				text-align: center;
+			}
+
+			.file-upload input[type="file"] {
+				position: absolute;
+				font-size: 100px;
+				right: 0;
+				top: 0;
+				opacity: 0;
+				cursor: pointer;
+			}
+
+			.upload-btn-wrapper {
+				position: relative;
+				overflow: hidden;
+				display: inline-block;
+			}
+
+			.upload-btn {
+				border: 2px dashed #ccc;
+				color: #6c757d;
+				background-color: white;
+				padding: 20px 25px;
+				border-radius: 8px;
+				font-size: 16px;
+				width: 100%;
+				text-align: center;
+				cursor: pointer;
+				transition: all 0.3s;
+			}
+
+			.upload-btn:hover {
+				border-color: #4285f4;
+				color: #4285f4;
+			}
+
+			.upload-btn-wrapper input[type="file"] {
+				font-size: 100px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				opacity: 0;
+				cursor: pointer;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<div class="container">
+					<a class="navbar-brand" href="../index.html">
+						<h2>eVidya Learning</h2>
+					</a>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarMain"
+						aria-controls="navbarMain"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarMain">
+						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="../index.html">
+									<i class="fas fa-home me-1"></i> Home
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./catalogue.html">
+									<i class="fas fa-book me-1"></i> Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a
+									class="nav-link active"
+									aria-current="page"
+									href="./profile.html"
+								>
+									<i class="fas fa-user me-1"></i> Profile
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./settings.html">
+									<i class="fas fa-cog me-1"></i> Settings
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<main class="container py-5">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="profile-section">
+						<div class="profile-header">
+							<div class="profile-avatar">
+								<i class="fas fa-user"></i>
+							</div>
+							<div>
+								<h2 id="profile-name">Student</h2>
+								<p class="text-muted" id="profile-email">
+									student@example.com
+								</p>
+							</div>
+						</div>
+						<button
+							class="btn primary-btn w-100 mb-3"
+							id="edit-profile-btn"
+						>
+							<i class="fas fa-edit me-2"></i>Edit Profile
+						</button>
+					</div>
+
+					<div class="profile-section">
+						<h3><i class="fas fa-chart-bar me-2"></i>Learning Analytics</h3>
+						<div class="analytics-metrics">
+							<div class="metric-card">
+								<div class="metric-value" id="metric-hours">0</div>
+								<div class="metric-label">Hours Spent</div>
+							</div>
+							<div class="metric-card">
+								<div class="metric-value" id="metric-courses">0</div>
+								<div class="metric-label">Courses</div>
+							</div>
+						</div>
+						<div class="analytics-metrics mt-2">
+							<div class="metric-card">
+								<div class="metric-value" id="metric-completion">0%</div>
+								<div class="metric-label">Completion Rate</div>
+							</div>
+							<div class="metric-card">
+								<div class="metric-value" id="metric-score">0</div>
+								<div class="metric-label">Avg. Score</div>
+							</div>
+						</div>
+
+						<div class="chart-container mt-4">
+							<canvas id="weekly-activity-chart"></canvas>
+						</div>
+
+						<div class="d-grid">
+							<button class="btn primary-btn" id="generate-report-btn">
+								<i class="fas fa-file-pdf me-2"></i>Generate Learning Report
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-8">
+					<div class="profile-section">
+						<h3>
+							<i class="fas fa-chart-line me-2"></i>Learning
+							Progress
+						</h3>
+
+						<div class="progress-stats">
+							<div class="row text-center">
+								<div class="col-md-4 mb-3 mb-md-0">
+									<h4 id="courses-started">0</h4>
+									<p class="text-muted">Courses Started</p>
+								</div>
+								<div class="col-md-4 mb-3 mb-md-0">
+									<h4 id="courses-completed">0</h4>
+									<p class="text-muted">Courses Completed</p>
+								</div>
+								<div class="col-md-4">
+									<h4 id="quizzes-passed">0</h4>
+									<p class="text-muted">Quizzes Passed</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6">
+								<div class="analytics-card">
+									<h5><i class="fas fa-chart-pie me-2"></i>Topic Distribution</h5>
+									<div class="chart-container">
+										<canvas id="topics-chart"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="analytics-card">
+									<h5><i class="fas fa-calendar-alt me-2"></i>Monthly Progress</h5>
+									<div class="chart-container">
+										<canvas id="monthly-progress-chart"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<h4 class="mt-4">Course Progress</h4>
+						<ul
+							class="course-progress-list"
+							id="course-progress-list"
+						>
+							<!-- Course progress items will be dynamically added here -->
+							<div class="text-center py-4">
+								<div
+									class="spinner-border text-primary"
+									role="status"
+								>
+									<span class="visually-hidden"
+										>Loading...</span
+									>
+								</div>
+								<p class="mt-2">
+									Loading your course progress...
+								</p>
+							</div>
+						</ul>
+					</div>
+
+					<div class="profile-section">
+						<h3>
+							<i class="fas fa-file-alt me-2"></i>Learning Report Card
+						</h3>
+						<div class="report-card-preview mb-3" id="report-preview">
+							<div class="text-center py-4">
+								<p class="mb-3">Your personalized learning report will appear here.</p>
+								<p class="text-muted">Click "Generate Learning Report" to create a personalized report powered by AI.</p>
+							</div>
+						</div>
+						<p class="text-muted">
+							<small><i class="fas fa-info-circle me-1"></i> The generated report provides personalized feedback and recommendations based on your learning patterns and progress.</small>
+						</p>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- User Onboarding Modal -->
+		<div class="modal fade onboarding-modal" id="onboardingModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Welcome to eVidya Learning</h5>
+					</div>
+					<div class="modal-body">
+						<!-- Step 1: User Info -->
+						<div class="onboarding-step active" id="step-1">
+							<h4 class="mb-4">Let's set up your profile</h4>
+							<div class="mb-3">
+								<label for="onboarding-name" class="form-label">Your Name</label>
+								<input type="text" class="form-control" id="onboarding-name" placeholder="Enter your name">
+							</div>
+							<div class="mb-3">
+								<label for="onboarding-email" class="form-label">Email Address</label>
+								<input type="email" class="form-control" id="onboarding-email" placeholder="Enter your email">
+							</div>
+						</div>
+
+						<!-- Step 2: Import or Start Fresh -->
+						<div class="onboarding-step" id="step-2">
+							<h4 class="mb-4">Would you like to import existing learning data?</h4>
+							<div class="mb-4">
+								<div class="upload-btn-wrapper mb-4">
+									<div class="upload-btn">
+										<i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+										<p class="mb-1">Drag & drop your eVidya data file here</p>
+										<p class="text-muted mb-0"><small>or click to browse</small></p>
+									</div>
+									<input type="file" id="import-file-input" accept=".json">
+								</div>
+								<div id="file-upload-status" class="text-center mb-3"></div>
+							</div>
+							<div class="text-center">
+								<p>- OR -</p>
+								<button class="btn primary-btn" id="start-fresh-btn">
+									<i class="fas fa-play me-2"></i>Start Fresh
+								</button>
+							</div>
+						</div>
+
+						<!-- Step 3: Confirmation -->
+						<div class="onboarding-step" id="step-3">
+							<div class="text-center">
+								<i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+								<h4 class="mt-3">You're all set!</h4>
+								<p>Your profile has been created successfully. Let's start your learning journey.</p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn secondary-btn" id="back-btn" disabled>Back</button>
+						<button type="button" class="btn primary-btn" id="next-btn">Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer>
+			<div class="container">
+				<p>&copy; 2025 eVidya by VKrishna04. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<!-- Bootstrap JS Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="../js/main.js"></script>
+		<script src="../js/storage.js"></script>
+		<script src="../data/course-data.js"></script>
+		<script src="../js/progress-tracker.js"></script>
+		<script src="../js/config.js"></script>
+		<script src="../js/gemini-ai.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				// Check if user is new (first visit to profile)
+				const isProfileSetup = localStorage.getItem("profileSetup");
+
+				if (!isProfileSetup) {
+					// Show onboarding modal for new users
+					const onboardingModal = new bootstrap.Modal(document.getElementById('onboardingModal'));
+					onboardingModal.show();
+
+					// Handle onboarding navigation
+					const backBtn = document.getElementById('back-btn');
+					const nextBtn = document.getElementById('next-btn');
+					const steps = document.querySelectorAll('.onboarding-step');
+					let currentStep = 0;
+
+					// Next button click handler
+					nextBtn.addEventListener('click', function() {
+						// Validate current step
+						if (currentStep === 0) {
+							const name = document.getElementById('onboarding-name').value.trim();
+							const email = document.getElementById('onboarding-email').value.trim();
+
+							if (!name || !email) {
+								alert('Please enter your name and email to continue.');
+								return;
+							}
+
+							// Save user info to localStorage
+							localStorage.setItem("profileName", name);
+							localStorage.setItem("profileEmail", email);
+						}
+
+						// If on last step, complete onboarding
+						if (currentStep === steps.length - 1) {
+							localStorage.setItem("profileSetup", "completed");
+							onboardingModal.hide();
+							loadUserData(); // Load user data after onboarding
+							initializeAnalytics(); // Initialize analytics after onboarding
+							return;
+						}
+
+						// Move to next step
+						steps[currentStep].classList.remove('active');
+						currentStep++;
+						steps[currentStep].classList.add('active');
+
+						// Update button states
+						backBtn.disabled = false;
+						if (currentStep === steps.length - 1) {
+							nextBtn.textContent = 'Get Started';
+						}
+					});
+
+					// Back button click handler
+					backBtn.addEventListener('click', function() {
+						if (currentStep > 0) {
+							steps[currentStep].classList.remove('active');
+							currentStep--;
+							steps[currentStep].classList.add('active');
+
+							// Update button states
+							nextBtn.textContent = 'Next';
+							if (currentStep === 0) {
+								backBtn.disabled = true;
+							}
+						}
+					});
+
+					// Import file handling
+					const importFileInput = document.getElementById('import-file-input');
+					const fileUploadStatus = document.getElementById('file-upload-status');
+
+					importFileInput.addEventListener('change', function(e) {
+						const file = e.target.files[0];
+						if (file) {
+							fileUploadStatus.innerHTML = `<div class="alert alert-info">
+								<i class="fas fa-spinner fa-spin me-2"></i>Uploading: ${file.name}</div>`;
+
+							const reader = new FileReader();
+							reader.onload = function(event) {
+								try {
+									const importedData = JSON.parse(event.target.result);
+
+									// Import the data into localStorage
+									if (importedData.courseProgress) {
+										localStorage.setItem("courseProgress", JSON.stringify(importedData.courseProgress));
+									}
+									if (importedData.completedLessons) {
+										localStorage.setItem("completedLessons", JSON.stringify(importedData.completedLessons));
+									}
+									if (importedData.completedQuizzes) {
+										localStorage.setItem("completedQuizzes", JSON.stringify(importedData.completedQuizzes));
+									}
+									if (importedData.watchedVideos) {
+										localStorage.setItem("watchedVideos", JSON.stringify(importedData.watchedVideos));
+									}
+
+									fileUploadStatus.innerHTML = `<div class="alert alert-success">
+										<i class="fas fa-check-circle me-2"></i>Data imported successfully!</div>`;
+
+									// Go to final step after successful import
+									setTimeout(() => {
+										steps[currentStep].classList.remove('active');
+										currentStep = 2; // Set to confirmation step
+										steps[currentStep].classList.add('active');
+										backBtn.disabled = true;
+										nextBtn.textContent = 'Get Started';
+									}, 1000);
+
+								} catch (e) {
+									console.error("Error importing data:", e);
+									fileUploadStatus.innerHTML = `<div class="alert alert-danger">
+										<i class="fas fa-exclamation-circle me-2"></i>Invalid data format. Please try again.</div>`;
+								}
+							};
+							reader.readAsText(file);
+						}
+					});
+
+					// Start fresh button
+					document.getElementById('start-fresh-btn').addEventListener('click', function() {
+						steps[currentStep].classList.remove('active');
+						currentStep = 2; // Set to confirmation step
+						steps[currentStep].classList.add('active');
+						backBtn.disabled = true;
+						nextBtn.textContent = 'Get Started';
+					});
+				} else {
+					// User is already set up, load data
+					loadUserData();
+					initializeAnalytics();
+				}
+
+				// Load user profile data
+				function loadUserData() {
+					const profileName = localStorage.getItem("profileName") || "Student";
+					const profileEmail = localStorage.getItem("profileEmail") || "student@example.com";
+
+					document.getElementById("profile-name").textContent = profileName;
+					document.getElementById("profile-email").textContent = profileEmail;
+
+					// Load course progress data if available
+					if (typeof ProgressTracker !== "undefined") {
+						const progressTracker = new ProgressTracker();
+						const progressData = progressTracker.getAllProgress();
+
+						let coursesStarted = 0;
+						let coursesCompleted = 0;
+						let quizzesPassed = 0;
+
+						// Reset progress list
+						const progressList = document.getElementById("course-progress-list");
+						progressList.innerHTML = "";
+
+						// Get courses data
+						const courses = window.courseData ? window.courseData.courses : [];
+
+						if (progressData && Object.keys(progressData).length > 0) {
+							// Count stats and create progress items
+							Object.keys(progressData).forEach((courseId) => {
+								const courseProgress = progressData[courseId];
+								const course = courses.find((c) => c.id === courseId);
+
+								if (course) {
+									coursesStarted++;
+
+									// Calculate completion percentage
+									const totalItems = courseProgress.totalItems || 1;
+									const completedItems = courseProgress.completedItems || 0;
+									const percentComplete = Math.round((completedItems / totalItems) * 100);
+
+									if (percentComplete === 100) {
+										coursesCompleted++;
+									}
+
+									// Count passed quizzes
+									if (courseProgress.quizzes) {
+										Object.values(courseProgress.quizzes).forEach((passed) => {
+											if (passed) quizzesPassed++;
+										});
+									}
+
+									// Create progress item
+									const li = document.createElement("li");
+									li.className = "course-progress-item";
+									li.innerHTML = `
+										<div class="d-flex justify-content-between align-items-center">
+											<h5>${course.title}</h5>
+											<span class="badge bg-${percentComplete === 100 ? "success" : "primary"}">${percentComplete}%</span>
+										</div>
+										<div class="progress">
+											<div class="progress-bar" role="progressbar" style="width: ${percentComplete}%"
+												aria-valuenow="${percentComplete}" aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+										<div class="mt-2">
+											<small class="text-muted">${completedItems} of ${totalItems} items completed</small>
+										</div>
+										<div class="d-flex mt-2">
+											<a href="./course-details.html?courseId=${courseId}" class="btn outline-btn btn-sm me-2">
+												<i class="fas fa-play me-1"></i>Resume
+											</a>
+											<button class="btn secondary-btn btn-sm course-report-btn" data-course-id="${courseId}">
+												<i class="fas fa-file-alt me-1"></i>View Report
+											</button>
+										</div>
+									`;
+									progressList.appendChild(li);
+								}
+							});
+
+							// Update stats
+							document.getElementById("courses-started").textContent = coursesStarted;
+							document.getElementById("courses-completed").textContent = coursesCompleted;
+							document.getElementById("quizzes-passed").textContent = quizzesPassed;
+
+							// If no courses started
+							if (coursesStarted === 0) {
+								progressList.innerHTML = `
+									<div class="text-center py-4">
+										<p>You haven't started any courses yet.</p>
+										<a href="./catalogue.html" class="btn primary-btn mt-2">Browse Courses</a>
+									</div>
+								`;
+							}
+						} else {
+							// No progress data
+							progressList.innerHTML = `
+								<div class="text-center py-4">
+									<p>You haven't started any courses yet.</p>
+									<a href="./catalogue.html" class="btn primary-btn mt-2">Browse Courses</a>
+								</div>
+							`;
+						}
+					}
+				}
+
+				// Edit profile button functionality
+				document.getElementById("edit-profile-btn").addEventListener("click", function () {
+					const profileName = document.getElementById("profile-name").textContent;
+					const profileEmail = document.getElementById("profile-email").textContent;
+
+					const newName = prompt("Enter your name:", profileName);
+					const newEmail = prompt("Enter your email:", profileEmail);
+
+					if (newName && newName.trim() !== "") {
+						localStorage.setItem("profileName", newName);
+						document.getElementById("profile-name").textContent = newName;
+					}
+
+					if (newEmail && newEmail.trim() !== "") {
+						localStorage.setItem("profileEmail", newEmail);
+						document.getElementById("profile-email").textContent = newEmail;
+					}
+				});
+
+				// Initialize analytics with Chart.js
+				function initializeAnalytics() {
+					// Sample data - in a real app, this would come from actual user data
+					updateMetrics();
+
+					// Weekly Activity Chart
+					const weeklyActivityCtx = document.getElementById('weekly-activity-chart').getContext('2d');
+					const weeklyActivityChart = new Chart(weeklyActivityCtx, {
+						type: 'bar',
+						data: {
+							labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+							datasets: [{
+								label: 'Hours Spent',
+								data: generateRandomData(7, 0, 4),
+								backgroundColor: 'rgba(66, 133, 244, 0.7)',
+								borderColor: 'rgba(66, 133, 244, 1)',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							plugins: {
+								title: {
+									display: true,
+									text: 'Your Weekly Learning Activity'
+								},
+								legend: {
+									display: false
+								}
+							},
+							scales: {
+								y: {
+									beginAtZero: true,
+									title: {
+										display: true,
+										text: 'Hours'
+									}
+								}
+							}
+						}
+					});
+
+					// Topics Distribution Chart
+					const topicsCtx = document.getElementById('topics-chart').getContext('2d');
+					const topicsChart = new Chart(topicsCtx, {
+						type: 'doughnut',
+						data: {
+							labels: ['Programming', 'Design', 'Business', 'Data Science', 'Marketing'],
+							datasets: [{
+								data: generateRandomData(5, 1, 5),
+								backgroundColor: [
+									'rgba(66, 133, 244, 0.7)',
+									'rgba(219, 68, 55, 0.7)',
+									'rgba(244, 180, 0, 0.7)',
+									'rgba(15, 157, 88, 0.7)',
+									'rgba(171, 71, 188, 0.7)'
+								],
+								borderColor: [
+									'rgba(66, 133, 244, 1)',
+									'rgba(219, 68, 55, 1)',
+									'rgba(244, 180, 0, 1)',
+									'rgba(15, 157, 88, 1)',
+									'rgba(171, 71, 188, 1)'
+								],
+								borderWidth: 1
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							plugins: {
+								legend: {
+									position: 'bottom'
+								}
+							}
+						}
+					});
+
+					// Monthly Progress Chart
+					const monthlyCtx = document.getElementById('monthly-progress-chart').getContext('2d');
+					const monthlyChart = new Chart(monthlyCtx, {
+						type: 'line',
+						data: {
+							labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+							datasets: [{
+								label: 'Courses Completed',
+								data: generateRandomData(6, 0, 3),
+								backgroundColor: 'rgba(66, 133, 244, 0.2)',
+								borderColor: 'rgba(66, 133, 244, 1)',
+								borderWidth: 2,
+								fill: true,
+								tension: 0.4
+							}]
+						},
+						options: {
+							responsive: true,
+							maintainAspectRatio: false,
+							plugins: {
+								legend: {
+									display: false
+								}
+							},
+							scales: {
+								y: {
+									beginAtZero: true,
+									title: {
+										display: true,
+										text: 'Courses'
+									}
+								}
+							}
+						}
+					});
+				}
+
+				// Helper function to generate random data for charts
+				function generateRandomData(count, min, max) {
+					return Array.from({ length: count }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+				}
+
+				// Update analytics metrics
+				function updateMetrics() {
+					const progressData = window.ProgressTracker ? new ProgressTracker().getAllProgress() : {};
+					const coursesCount = Object.keys(progressData).length;
+
+					// Calculate total time spent (placeholder logic)
+					let totalHours = 0;
+					let totalCompletion = 0;
+					let avgScore = 0;
+					let quizCount = 0;
+
+					// Process progress data to calculate metrics
+					Object.values(progressData).forEach(course => {
+						// Assume each content item takes 20 minutes
+						const completedItems = course.completedItems || 0;
+						totalHours += completedItems * (20/60);
+
+						// Calculate completion percentage
+						const totalItems = course.totalItems || 1;
+						totalCompletion += (completedItems / totalItems) * 100;
+
+						// Calculate quiz scores
+						if (course.quizScores) {
+							Object.values(course.quizScores).forEach(score => {
+								avgScore += score;
+								quizCount++;
+							});
+						}
+					});
+
+					// Update metric displays
+					document.getElementById('metric-hours').textContent = totalHours.toFixed(1);
+					document.getElementById('metric-courses').textContent = coursesCount;
+
+					const avgCompletion = coursesCount > 0 ? totalCompletion / coursesCount : 0;
+					document.getElementById('metric-completion').textContent = Math.round(avgCompletion) + '%';
+
+					const finalAvgScore = quizCount > 0 ? Math.round(avgScore / quizCount) : 0;
+					document.getElementById('metric-score').textContent = finalAvgScore;
+				}
+
+					// Generate Report functionality using Gemini
+				document.getElementById("generate-report-btn").addEventListener("click", async function() {
+					const reportPreview = document.getElementById("report-preview");
+					reportPreview.innerHTML = `
+						<div class="text-center py-4">
+							<div class="spinner-border text-primary" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+							<p class="mt-2">Generating your personalized learning report...</p>
+							<p class="text-muted"><small>This may take a moment as our AI analyzes your learning patterns.</small></p>
+						</div>
+					`;
+
+					try {
+						// Check if Gemini API is configured
+						if (!config.gemini.isConfigured()) {
+							reportPreview.innerHTML = `
+								<div class="alert alert-warning">
+									<i class="fas fa-exclamation-triangle me-2"></i>
+									<strong>Gemini API Key Required</strong>
+									<p class="mb-0">To generate personalized learning reports, please add your Gemini API key in the Settings page.</p>
+									<a href="./settings.html" class="btn outline-btn btn-sm mt-2">Go to Settings</a>
+								</div>
+							`;
+							return;
+						}
+
+						// Collect user data for the report
+						const progressData = window.ProgressTracker ? new ProgressTracker().getAllProgress() : {};
+						const courses = window.courseData ? window.courseData.courses : [];
+						const userData = {
+							name: localStorage.getItem("profileName") || "Student",
+							email: localStorage.getItem("profileEmail") || "student@example.com",
+							coursesStarted: Object.keys(progressData).length,
+							coursesCompleted: 0,
+							quizzesPassed: 0,
+							topCourses: []
+						};
+
+						// Process course data
+						Object.keys(progressData).forEach(courseId => {
+							const courseProgress = progressData[courseId];
+							const course = courses.find(c => c.id === courseId);
+
+							if (course) {
+								const totalItems = courseProgress.totalItems || 1;
+								const completedItems = courseProgress.completedItems || 0;
+								const percentComplete = Math.round((completedItems / totalItems) * 100);
+
+								if (percentComplete === 100) {
+									userData.coursesCompleted++;
+								}
+
+								// Count passed quizzes
+								if (courseProgress.quizzes) {
+									userData.quizzesPassed += Object.values(courseProgress.quizzes).filter(passed => passed).length;
+								}
+
+								// Add to top courses
+								userData.topCourses.push({
+									title: course.title,
+									progress: percentComplete,
+									category: course.category || "General"
+								});
+							}
+						});
+
+						// Sort courses by progress
+						userData.topCourses.sort((a, b) => b.progress - a.progress);
+						userData.topCourses = userData.topCourses.slice(0, 3); // Get top 3
+
+						// Get the current date for the report
+						const currentDate = new Date().toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						});
+
+						// Generate report using Gemini AI
+						const geminiPrompt = `
+							Generate a learning progress report for a student named ${userData.name} on an e-learning platform.
+
+							Here's their learning data:
+							- Courses started: ${userData.coursesStarted}
+							- Courses completed: ${userData.coursesCompleted}
+							- Quizzes passed: ${userData.quizzesPassed}
+							- Top courses: ${userData.topCourses.map(c => `${c.title} (${c.progress}% complete, Category: ${c.category})`).join(", ")}
+
+							Create a professional but encouraging learning progress report that includes:
+							1. A personalized greeting
+							2. Overall progress summary
+							3. Strengths based on their most completed courses
+							4. Areas for improvement
+							5. Personalized recommendations for next steps
+							6. A motivational closing message
+
+							Format the output as HTML with appropriate headings, paragraphs and styling classes (use Bootstrap classes).
+							Make the report look professional with clear sections.
+						`;
+
+						// Call Gemini API
+						const geminiAI = new GeminiAI();
+						const reportHtml = await geminiAI.generateText(geminiPrompt);
+
+						// Display the generated report
+						reportPreview.innerHTML = `
+							<div class="report-header mb-4">
+								<h4>eVidya Learning Progress Report</h4>
+								<p class="text-muted">Generated on ${currentDate}</p>
+							</div>
+							<div class="report-content">
+								${reportHtml}
+							</div>
+							<div class="report-actions mt-4 d-flex justify-content-end">
+								<button id="download-report-pdf" class="btn primary-btn">
+									<i class="fas fa-file-pdf me-2"></i>Download PDF Report
+								</button>
+							</div>
+						`;
+
+						// Add event listener to download button
+						document.getElementById("download-report-pdf").addEventListener("click", function() {
+							// Generate PDF using jsPDF and html2canvas
+							const reportContent = document.querySelector(".report-content");
+							const pdf = new jspdf.jsPDF("p", "pt", "a4");
+
+							// Set up PDF generation
+							reportContent.style.width = "595px"; // A4 width in pixels
+
+							// Generate PDF with company header
+							pdf.setFontSize(18);
+							pdf.setTextColor(66, 133, 244);
+							pdf.text("eVidya Learning", 40, 40);
+
+							pdf.setFontSize(14);
+							pdf.setTextColor(100, 100, 100);
+							pdf.text("Learning Progress Report", 40, 70);
+
+							pdf.setFontSize(12);
+							pdf.setTextColor(150, 150, 150);
+							pdf.text(`Generated for: ${userData.name}`, 40, 90);
+							pdf.text(`Date: ${currentDate}`, 40, 110);
+
+							pdf.setDrawColor(220, 220, 220);
+							pdf.line(40, 130, 555, 130);
+
+							// Convert the report content to an image and add to PDF
+							html2canvas(reportContent).then(canvas => {
+								const imgData = canvas.toDataURL('image/png');
+								pdf.addImage(imgData, 'PNG', 40, 150, 515, canvas.height * 515 / canvas.width);
+
+								// Add footer
+								const pageCount = pdf.internal.getNumberOfPages();
+								pdf.setFontSize(10);
+								pdf.setTextColor(150, 150, 150);
+								for (let i = 1; i <= pageCount; i++) {
+									pdf.setPage(i);
+									pdf.text('eVidya Learning - Personalized Online Education', 40, pdf.internal.pageSize.height - 30);
+									pdf.text(`Page ${i} of ${pageCount}`, pdf.internal.pageSize.width - 100, pdf.internal.pageSize.height - 30);
+								}
+
+								pdf.save(`eVidya_Learning_Report_${userData.name.replace(/\s/g, '_')}.pdf`);
+
+								// Reset report content width
+								reportContent.style.width = "";
+							});
+						});
+
+					} catch (error) {
+						console.error("Error generating report:", error);
+						reportPreview.innerHTML = `
+							<div class="alert alert-danger">
+								<i class="fas fa-exclamation-circle me-2"></i>
+								<strong>Error Generating Report</strong>
+								<p class="mb-0">There was a problem generating your learning report. Please try again later.</p>
+							</div>
+						`;
+					}
+				});
+
+				// Handle individual course report buttons
+				document.addEventListener('click', function(e) {
+					if (e.target.closest('.course-report-btn')) {
+						const btn = e.target.closest('.course-report-btn');
+						const courseId = btn.dataset.courseId;
+
+						// Here you would generate a course-specific report
+						// For now, we'll show an alert
+						alert(`Individual course report for course ID: ${courseId} will be implemented in a future update.`);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

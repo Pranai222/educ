@@ -1,0 +1,341 @@
+/* Main styles for the eVidya Learning Platform */
+
+:root {
+	--primary-color: #1a73e8;
+	--primary-dark: #0d47a1;
+	--secondary-color: #f1f8ff;
+	--text-color: #3c4043;
+	--text-light: #5f6368;
+	--border-color: #dadce0;
+	--success-color: #34a853;
+	--warning-color: #fbbc04;
+	--error-color: #ea4335;
+	--white: #ffffff;
+	--light-bg: #f8f9fa;
+	--shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	--border-radius: 8px;
+	--transition: all 0.3s ease;
+}
+
+/* Reset and base styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	color: var(--text-color);
+	background-color: var(--secondary-color);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Add this to fix dropdown z-index issues */
+.dropdown-menu {
+	z-index: 1030;
+	/* Higher than default to ensure it appears above content */
+}
+
+.navbar-nav .dropdown-menu {
+	z-index: 1050 !important;
+	/* Higher z-index to ensure dropdowns appear above all content */
+	position: absolute !important;
+	/* Force absolute positioning */
+}
+
+/* Ensure other elements don't have higher z-index */
+.container,
+main,
+section,
+.settings-section {
+	z-index: 1;
+	position: relative;
+}
+main {
+	flex: 1;
+	padding: 20px;
+}
+
+a {
+	color: var(--primary-color);
+	text-decoration: none;
+	transition: var(--transition);
+}
+
+a:hover {
+	color: var(--primary-dark);
+}
+
+button {
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+/* Header styles */
+header {
+	background: linear-gradient(135deg, var(--primary-color), #0D47A1);
+		padding: 0.75rem 0;
+		color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		position: relative;
+		overflow: hidden;
+	}
+.header-pattern-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+		height: 100%;
+		background-image: url('data:image/png;base64,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');
+		background-repeat: repeat;
+		opacity: 0.1;
+	z-index: 1;
+}
+
+.header-container {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+header h1 {
+	color: #000;
+	font-weight: 700;
+		text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+		margin-bottom: 15px;
+		letter-spacing: 0.5px;
+	}
+
+	header p.lead {
+		color: #000;
+		font-size: 1.2rem;
+		font-weight: 500;
+		max-width: 700px;
+		margin: 0 auto;
+}
+
+.navbar-brand h2 {
+	font-size: 1.5rem;
+	margin-bottom: 0;
+}
+nav ul {
+	display: flex;
+	list-style: none;
+}
+
+nav ul li {
+	margin-left: 20px;
+}
+
+nav ul li a {
+	color: var(--white);
+	padding: 8px 12px;
+	border-radius: 4px;
+	font-weight: 500;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-nav .nav-link {
+	padding: 0.5rem 1rem;
+	font-size: 0.95rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+	color: #fff;
+}
+/* Footer styles */
+footer {
+	background-color: var(--primary-color);
+	color: var(--white);
+	text-align: center;
+	padding: 15px;
+	margin-top: auto;
+}
+
+/* Common components */
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	border: none;
+	border-radius: var(--border-radius);
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.btn-primary {
+	background-color: var(--primary-color);
+	color: var(--white);
+}
+
+.btn-primary:hover {
+	background-color: var(--primary-dark);
+	transform: translateY(-2px);
+}
+
+.btn-secondary {
+	background-color: var(--light-bg);
+	color: var(--text-color);
+}
+
+.btn-secondary:hover {
+	background-color: var(--border-color);
+}
+
+.btn-danger {
+	background-color: var(--error-color);
+	color: var(--white);
+}
+
+.btn-danger:hover {
+	background-color: #d32f2f;
+}
+
+.primary-btn {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
+}
+
+.primary-btn:hover,
+.primary-btn:focus {
+	background-color: var(--primary-color-dark, #1976D2);
+	border-color: var(--primary-color-dark, #1976D2);
+}
+
+.outline-btn {
+	color: var(--primary-color);
+	border-color: var(--primary-color);
+}
+
+.outline-btn:hover,
+.outline-btn:focus {
+	background-color: var(--primary-color);
+}
+.card {
+	background-color: var(--white);
+	border-radius: var(--border-radius);
+	box-shadow: var(--shadow);
+	overflow: hidden;
+	transition: var(--transition);
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Progress bar styles */
+.progress-container {
+	margin: 15px 0;
+}
+
+.progress {
+	height: 8px;
+	background-color: #e0e0e0;
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.progress-bar {
+	height: 100%;
+	background-color: #ff0000;
+		/* YouTube-like red color */
+		border-radius: 2px;
+	transition: width 0.3s ease;
+}
+
+/* Loading state */
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 200px;
+	font-size: 16px;
+	color: var(--text-light);
+}
+
+/* Accent color for various elements */
+.nav-link.active {
+	background-color: rgba(255, 255, 255, 0.15);
+	border-radius: 4px;
+}
+
+.page-item.active .page-link {
+	background-color: var(--primary-color) !important;
+	border-color: var(--primary-color) !important;
+}
+
+.form-control:focus {
+	border-color: var(--primary-color);
+	box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+.btn-check:focus+.btn,
+.btn:focus {
+	box-shadow: 0 0 0 0.25rem rgba(33, 150, 243, 0.25);
+}
+
+/* Make dropdown menus consistent with theme */
+.dropdown-item.active,
+.dropdown-item:active {
+	background-color: var(--primary-color);
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.header-container {
+		flex-direction: column;
+		padding: 10px;
+	}
+
+	header h1 {
+		margin-bottom: 10px;
+	}
+
+	nav ul {
+		width: 100%;
+		justify-content: center;
+	}
+
+	nav ul li {
+		margin: 0 10px;
+	}
+}
+
+@media (max-width: 576px) {
+	header h1 {
+		font-size: 20px;
+	}
+
+	nav ul li {
+		margin: 0 5px;
+	}
+
+	nav ul li a {
+		padding: 6px 8px;
+		font-size: 14px;
+	}
+}

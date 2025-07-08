@@ -1,0 +1,110 @@
+/* CSS-based placeholder images for courses */
+.course-image {
+	position: relative;
+	height: 160px;
+	background-color: #e9ecef;
+	overflow: hidden;
+}
+
+.course-image::before {
+	content: attr(data-course);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: #495057;
+}
+
+/* JavaScript placeholder */
+.course-image[data-course="JavaScript Basics"] {
+	background-color: #f7df1e;
+}
+
+.course-image[data-course="JavaScript Basics"]::before {
+	color: #323330;
+}
+
+/* HTML & CSS placeholder */
+.course-image[data-course="HTML & CSS Fundamentals"] {
+	background: linear-gradient(135deg, #e34c26 0%, #e34c26 50%, #264de4 50%, #264de4 100%);
+}
+
+.course-image[data-course="HTML & CSS Fundamentals"]::before {
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Python placeholder */
+.course-image[data-course="Introduction to Python"] {
+	background: linear-gradient(135deg, #306998 0%, #306998 50%, #FFD43B 50%, #FFD43B 100%);
+}
+
+.course-image[data-course="Introduction to Python"]::before {
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Frameworks placeholder */
+.course-image[data-course="Web Frameworks Overview"] {
+	background: linear-gradient(135deg, #61dafb 0%, #61dafb 33%, #42b883 33%, #42b883 66%, #dd0031 66%, #dd0031 100%);
+}
+
+.course-image[data-course="Web Frameworks Overview"]::before {
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+/* Gradient placeholders for course images */
+.course-placeholder {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	height: 200px !important;
+	color: white !important;
+	font-size: 2.5rem !important;
+	transition: all 0.3s ease;
+	position: relative;
+}
+
+.gradient-1 {
+	background: linear-gradient(135deg, #42a5f5, #4285f4) !important;
+}
+
+.gradient-2 {
+	background: linear-gradient(135deg, #ec407a, #d81b60) !important;
+}
+
+.gradient-3 {
+	background: linear-gradient(135deg, #66bb6a, #43a047) !important;
+}
+
+.gradient-4 {
+	background: linear-gradient(135deg, #ab47bc, #8e24aa) !important;
+}
+
+.gradient-5 {
+	background: linear-gradient(135deg, #ff9800, #f57c00) !important;
+}
+
+.course-placeholder i {
+	filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.2));
+}
+
+/* Title text in gradient placeholders */
+.placeholder-title {
+	position: absolute;
+	bottom: 15px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: white;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+	z-index: 2;
+}
