@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Course Catalogue - eVidya</title>
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<!-- Google Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- Material Icons -->
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+        <!-- Custom CSS -->
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="../css/catalogue.css" />
+        <!-- Add Favicon -->
+        <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+		<style>
+			/* Keep essential styles here, move others to catalogue.css if preferred */
+			body {
+				font-family: "Poppins", sans-serif;
+				background-color: #f9fafb; /* Light background */
+			}
+
+			header {
+				background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+				padding: 2.5rem 0; /* Slightly reduced padding */
+				margin-bottom: 0;
+			}
+            header .navbar-brand img {
+                vertical-align: text-bottom; /* Align icon better */
+            }
+            header h1 {
+                font-weight: 600;
+            }
+
+            /* --- Filter Card --- */
+            .filter-card {
+                 background-color: #ffffff;
+                 border-radius: 8px;
+                 box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+
+            /* --- Filter Tags --- */
+            .filter-tag {
+                display: inline-flex; /* Align icon properly */
+                align-items: center;
+                padding: 0.3em 0.6em;
+                font-size: 0.85em;
+            }
+            .filter-tag .remove-filter {
+                cursor: pointer;
+                opacity: 0.7;
+                margin-left: 0.4em;
+                font-size: 1.1em; /* Make X slightly larger */
+                line-height: 1; /* Prevent extra spacing */
+            }
+            .filter-tag .remove-filter:hover {
+                opacity: 1;
+            }
+
+            /* --- Loading/No Results --- */
+            #loading-indicator, #no-courses-message, #no-progress-message {
+                display: none; /* Hidden by default */
+                padding: 2rem;
+                text-align: center;
+                color: #6c757d; /* Muted text color */
+            }
+            #loading-indicator .spinner-border {
+                 width: 2.5rem; height: 2.5rem;
+            }
+
+            /* --- Progress Bar --- */
+            .progress-bar-container {
+                background-color: #e9ecef;
+                border-radius: .25rem;
+                height: 6px; /* Slimmer bar */
+                overflow: hidden;
+            }
+            .progress-bar {
+                background-color: var(--primary-color);
+                height: 100%;
+                transition: width .3s ease-in-out;
+            }
+            .progress-text {
+                font-size: 0.8rem;
+            }
+
+            /* --- View Toggle --- */
+            .view-toggle .btn {
+                padding: 0.375rem 0.75rem; /* Standard BS button padding */
+            }
+            .view-toggle .btn.active {
+                background-color: var(--primary-color);
+                color: white;
+                border-color: var(--primary-color);
+            }
+            .view-toggle .btn:not(.active) {
+                background-color: #fff;
+                color: #6c757d;
+                border-color: #ced4da;
+            }
+             .view-toggle .btn:not(.active):hover {
+                 background-color: #e9ecef;
+            }
+
+            /* --- Footer --- */
+            footer {
+                background-color: #e9ecef; /* Light footer background */
+            }
+
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<div class="container">
+					<a class="navbar-brand" href="../index.html">
+                        <img src="../images/favicon.svg" alt="eVidya Logo" width="30" height="30" class="d-inline-block me-2">
+						eVidya Learning
+					</a>
+					<button
+						class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+						aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarMain">
+						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+							<li class="nav-item"><a class="nav-link" href="../index.html"><i class="fas fa-home me-1"></i> Home</a></li>
+							<li class="nav-item"><a class="nav-link active" href="./catalogue.html"><i class="fas fa-book me-1"></i> Courses</a></li>
+							<li class="nav-item"><a class="nav-link" href="./profile.html"><i class="fas fa-user me-1"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link" href="./settings.html"><i class="fas fa-cog me-1"></i> Settings</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<div class="container mt-4 text-center pb-4">
+				<h1 class="text-white mb-2">Course Catalogue</h1>
+				<p class="lead text-white-50 mb-0"> <!-- Slightly muted lead text -->
+					Explore our wide range of courses and start learning today
+				</p>
+			</div>
+		</header>
+
+		<main class="container py-5">
+			<!-- Search and Filter Section -->
+			<div class="row mb-4">
+				<div class="col-12">
+                    <div class="card filter-card p-3 p-md-4 mb-4"> <!-- Added padding -->
+                        <h2 class="h5 mb-3 fw-semibold">Find Your Next Course</h2>
+                        <!-- Search Bar -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Search courses..." id="search-input" aria-label="Search courses"/>
+                            <button class="btn btn-primary" type="button" id="search-button"><i class="fas fa-search"></i></button>
+                            <button class="btn btn-outline-secondary ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#advancedFilters" aria-expanded="false" aria-controls="advancedFilters" title="Show Filters">
+                                <i class="fas fa-filter"></i><span class="d-none d-sm-inline ms-1"> Filters</span>
+                            </button>
+                        </div>
+
+                        <!-- Advanced Filters (Collapsible) -->
+                        <div class="collapse" id="advancedFilters">
+                            <hr class="my-3">
+                            <div class="row g-3">
+                                <div class="col-md-6 col-lg-3"><label for="category-filter" class="form-label small">Category</label><select class="form-select form-select-sm" id="category-filter"><option value="">All</option><option value="programming">Programming</option><option value="data science">Data Science</option><option value="web development">Web Development</option><option value="mobile development">Mobile Development</option><option value="design">Design</option><option value="business">Business</option><option value="marketing">Marketing</option><option value="personal development">Personal Development</option></select></div>
+                                <div class="col-md-6 col-lg-3"><label for="level-filter" class="form-label small">Level</label><select class="form-select form-select-sm" id="level-filter"><option value="">All</option><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></div>
+                                <div class="col-md-6 col-lg-3"><label for="duration-filter" class="form-label small">Duration</label><select class="form-select form-select-sm" id="duration-filter"><option value="">Any</option><option value="short">&lt; 3 hrs</option><option value="medium">3-10 hrs</option><option value="long">&gt; 10 hrs</option></select></div>
+                                <div class="col-md-6 col-lg-3"><label for="instructor-filter" class="form-label small">Instructor</label><select class="form-select form-select-sm" id="instructor-filter"><option value="">All</option><option value="dr. sarah johnson">Dr. Sarah Johnson</option><option value="prof. james smith">Prof. James Smith</option><option value="dr. michael brown">Dr. Michael Brown</option><option value="emily parker">Emily Parker</option><option value="david rodriguez">David Rodriguez</option><option value="dr. lisa patel">Dr. Lisa Patel</option></select></div>
+                                <div class="col-md-6 col-lg-3"><label for="sort-by-filter" class="form-label small">Sort By</label><select class="form-select form-select-sm" id="sort-by-filter"><option value="popularity">Popularity</option><option value="newest">Newest</option><option value="highest-rated">Highest Rated</option><option value="a-z">A-Z</option></select></div>
+                                <div class="col-12 mt-3 d-flex justify-content-end align-items-center">
+                                    <button class="btn btn-sm btn-outline-secondary me-2" id="clear-filters"><i class="fas fa-times me-1"></i>Clear</button>
+                                    <button class="btn btn-sm btn-primary" id="apply-filters"><i class="fas fa-check me-1"></i>Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<!-- Active filter tags -->
+					<div id="active-filters" class="mb-3 d-none">
+						<div class="d-flex align-items-center flex-wrap small">
+							<span class="me-2 text-muted">Active filters:</span>
+							<div id="filter-tags" class="d-flex flex-wrap gap-1"></div>
+						</div>
+                        <hr class="mt-2 mb-3">
+					</div>
+				</div>
+			</div>
+
+			<!-- Currently Learning Section -->
+			<div id="currently-learning-section" class="mb-5" style="display: none;"> <!-- Hide initially -->
+				<h2 class="h4 mb-3 fw-semibold">Continue Learning</h2>
+                <div id="no-progress-message" class="alert alert-light text-center">
+                    You haven't started any courses yet. Explore the catalogue below!
+                </div>
+                <div class="position-relative">
+                    <div class="scroll-buttons">
+                        <button id="scroll-left" class="btn btn-light rounded-circle scroll-btn left"><i class="fas fa-chevron-left"></i></button>
+                        <button id="scroll-right" class="btn btn-light rounded-circle scroll-btn right"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="horizontal-scroll-wrapper">
+                        <div id="currently-learning-container" class="d-flex flex-nowrap horizontal-scroll">
+                            <!-- Courses in progress inserted here -->
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4"> <!-- Separator before all courses -->
+			</div>
+
+			<!-- All Courses Section -->
+			<div class="row">
+				<div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+					    <h2 class="h4 mb-0 fw-semibold">All Courses</h2>
+                        <!-- View Toggle Buttons -->
+                        <div class="view-toggle">
+                            <div class="btn-group btn-group-sm" role="group" aria-label="View toggle">
+                                <button type="button" class="btn btn-outline-secondary active" id="grid-view-btn" title="Grid View"><i class="fas fa-th-large"></i></button>
+                                <button type="button" class="btn btn-outline-secondary" id="list-view-btn" title="List View"><i class="fas fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+					<!-- Loading indicator -->
+					<div id="loading-indicator" class="text-center py-5">
+						<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+						<p class="mt-2 text-muted">Loading courses...</p>
+					</div>
+
+					<!-- No courses message -->
+					<div id="no-courses-message" class="alert alert-info text-center">
+						No courses found matching your filters. Try adjusting your search or filters.
+					</div>
+
+                    <!-- Container where course cards are placed -->
+					<div id="courses-container" class="row g-4">
+						<!-- Course cards inserted here -->
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer class="bg-light pt-4 pb-2 mt-5 border-top">
+			<div class="container text-center">
+				<p class="text-muted small">&copy; 2025 VKrishna04 eVidya Tech Courses. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<!-- Bootstrap JS Bundle -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Config -->
+		<script src="../js/config.js"></script>
+		<!-- Course Data -->
+		<script src="../data/course-data.js"></script>
+		<!-- Catalogue Logic -->
+		<script src="../js/catalogue.js"></script>
+
+	</body>
+</html>

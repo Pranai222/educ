@@ -1,0 +1,38 @@
+/* CSS for course image placeholder */
+
+.course-placeholder {
+    background: linear-gradient(135deg, #2196F3, #0D47A1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    font-size: 2rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.course-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom styles for course images */
+.course-card img {
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Fallback for missing course images */
+.course-card img.error {
+    display: none;
+}
+
+.course-card img.error + .placeholder-fallback {
+    display: flex;
+}

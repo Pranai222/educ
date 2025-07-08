@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>eVidya - Tech Courses Platform</title>
+			<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<!-- Google Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+    	/>
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="./css/placeholder-images.css" />
+		<link rel="stylesheet" href="./css/enhanced-buttons.css" />
+		<link rel="stylesheet" href="./css/course-images.css" />
+		<link rel="stylesheet" href="./css/catalogue.css" />
+		<!-- Ensure favicon is properly referenced -->
+		<link rel="icon" type="image/x-icon" href="./favicon.ico" />
+		<!-- Load main.js first to initialize path handling -->
+		<script src="./js/main.js"></script>
+		<style>
+			header {
+				background: linear-gradient(135deg, #2196F3, #0D47A1);
+				padding: 2rem 0;
+				color: #fff;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			}
+
+			header h1 {
+				color: #000;
+				font-weight: 700;
+				text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+				margin-bottom: 10px;
+			}
+
+			header p {
+				color: #f0f0f0;
+				font-size: 1.2rem;
+			}
+
+			.hero-section {
+				background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+				padding: 5rem 0;
+				margin-bottom: 3rem;
+				color: white;
+				border-radius: 0 0 25% 0;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.hero-section::before {
+				content: "";
+				position: absolute;
+				top: -10%;
+				right: -10%;
+				width: 300px;
+				height: 300px;
+				background: rgba(255, 255, 255, 0.1);
+				border-radius: 50%;
+			}
+
+			.hero-content {
+				max-width: 700px;
+				margin: 0 auto;
+				text-align: center;
+				position: relative;
+				z-index: 2;
+			}
+
+			.hero-title {
+				font-size: 3.5rem;
+				font-weight: 700;
+				margin-bottom: 1rem;
+				text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+			}
+
+			.hero-subtitle {
+				font-size: 1.5rem;
+				margin-bottom: 2rem;
+				opacity: 0.9;
+			}
+
+			.cta-button {
+				margin-top: 30px;
+				text-align: center;
+			}
+
+			.cta-button .btn {
+				padding: 12px 30px;
+				font-size: 16px;
+				font-weight: 600;
+				box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+				transition: transform 0.3s, box-shadow 0.3s;
+			}
+
+			.cta-button .btn:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+			}
+
+			.welcome-section {
+				background-color: #fff;
+				padding: 2.5rem;
+				border-radius: 10px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+				margin-top: -30px;
+				position: relative;
+				z-index: 10;
+				margin-bottom: 40px;
+			}
+
+			.welcome-section h2 {
+				color: var(--primary-color);
+				margin-bottom: 1.5rem;
+				font-weight: 600;
+			}
+
+			.welcome-section p {
+				font-size: 1.1rem;
+				color: var(--text-light);
+				line-height: 1.7;
+			}
+
+			.features-section {
+				padding: 2rem 0 4rem 0;
+			}
+
+			.features-section h2 {
+				text-align: center;
+				margin-bottom: 3rem;
+				position: relative;
+				padding-bottom: 1rem;
+				color: var(--primary-color);
+			}
+
+			.features-section h2::after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 50%;
+				transform: translateX(-50%);
+				width: 80px;
+				height: 4px;
+				background: var(--primary-color);
+				border-radius: 2px;
+			}
+
+			.features-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+				gap: 30px;
+				margin-top: 30px;
+			}
+
+			.feature-card {
+				background-color: #fff;
+				padding: 25px;
+				border-radius: 10px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+
+			.feature-card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+			}
+
+			.feature-icon {
+				width: 60px;
+				height: 60px;
+				background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 20px;
+			}
+
+			.feature-icon i {
+				font-size: 24px;
+				color: white;
+			}
+
+			.feature-card h3 {
+				margin-bottom: 15px;
+				color: var(--primary-color);
+			}
+
+			.feature-card p {
+				color: var(--text-light);
+				line-height: 1.6;
+			}
+
+			.section-title {
+				color: var(--primary-color);
+				font-weight: 600;
+			}
+
+			#metrics {
+				background-color: var(--light-bg);
+			}
+
+			#metrics .display-4 {
+				color: var(--primary-color);
+				font-weight: 600;
+			}
+
+			footer {
+				margin-top: 50px;
+				background-color: var(--primary-color);
+				padding: 30px 0;
+				color: white;
+				text-align: center;
+			}
+
+			footer a {
+				color: white;
+			}
+
+			footer a:hover {
+				color: rgba(255,255,255,0.8);
+			}
+
+			.courses-section h2.section-title {
+				color: var(--primary-color);
+			}
+
+			.navbar-nav .dropdown-menu {
+				z-index: 9999 !important;
+				position: absolute !important;
+			}
+
+			/* Additional fix for dropdown positioning */
+			.dropdown {
+				position: static;
+			}
+
+			.dropdown-menu {
+				position: absolute !important;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="main-header">
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<div class="container">
+					<a class="navbar-brand" href="./index.html">
+						<h2>eVidya Learning</h2>
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarMain">
+						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link active" aria-current="page" href="./index.html">
+									<i class="fas fa-home me-1"></i> Home
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./pages/catalogue.html">
+									<i class="fas fa-book me-1"></i> Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./pages/profile.html">
+									<i class="fas fa-user me-1"></i> Profile
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./pages/settings.html">
+									<i class="fas fa-cog me-1"></i> Settings
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<section class="hero-section">
+			<div class="container">
+				<div class="hero-content">
+					<h1 class="hero-title">eVidya Tech Courses</h1>
+					<p class="hero-subtitle">Expand your knowledge with our interactive technology courses</p>
+					<div class="cta-button">
+						<a
+							href="./pages/catalogue.html"
+							class="btn primary-btn"
+							id="view-courses-btn"
+						>Browse Courses</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<main class="container">
+			<section class="welcome-section">
+				<h2>Welcome to the Tech Courses Platform</h2>
+				<p>
+					Explore our collection of tech courses designed to help you
+					master various technologies and programming languages. Track
+					your progress, complete quizzes, and enhance your skills at
+					your own pace. Our platform is designed for both beginners and experienced
+					developers looking to expand their knowledge.
+				</p>
+				<!-- <div id="course-stats" class="mt-4"></div> -->
+			</section>
+
+			 <section id="metrics" class="py-5 bg-light">
+				<div class="container text-center">
+					<h2 class="mb-4">Our Impact</h2>
+					<div class="row">
+						<div class="col-md-4">
+							<h3 id="courses-count" class="display-4">0</h3>
+							<p>Courses</p>
+						</div>
+						<div class="col-md-4">
+							<h3 id="videos-count" class="display-4">0</h3>
+							<p>Videos</p>
+						</div>
+						<div class="col-md-4">
+							<h3 id="quizzes-count" class="display-4">0</h3>
+							<p>Quizzes</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="features-section">
+				<h2>Platform Features</h2>
+				<div class="features-grid">
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-video"></i>
+						</div>
+						<h3>Interactive Courses</h3>
+						<p>
+							Learn through video lessons and hands-on exercises
+						</p>
+					</div>
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-chart-line"></i>
+						</div>
+						<h3>Progress Tracking</h3>
+						<p>Monitor your advancement through each course</p>
+					</div>
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-tasks"></i>
+						</div>
+						<h3>Knowledge Assessment</h3>
+						<p>
+							Test your understanding with quizzes and get instant
+							feedback
+						</p>
+					</div>
+					<div class="feature-card">
+						<div class="feature-icon">
+							<i class="fas fa-laptop-code"></i>
+						</div>
+						<h3>Offline Access</h3>
+						<p>
+							Your progress is saved locally for convenient access
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- Courses Section -->
+			<section class="courses-section py-5">
+				<div class="container">
+					<div class="row mb-4">
+						<div class="col-md-8">
+							<h2 class="section-title">Popular Courses</h2>
+							<p class="section-description">Explore our most popular courses and start your learning journey today.</p>
+						</div>
+						<div class="col-md-4 text-md-end">
+							<a href="./pages/catalogue.html" class="btn outline-btn">View All Courses <i class="fas fa-arrow-right ms-2"></i></a>
+						</div>
+					</div>
+					<div class="row" id="courses-container">
+						<div class="col-12 text-center">
+							<p class="lead">Loading courses...</p>
+							<div class="spinner-border text-primary" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8">
+						<p>
+							&copy; 2025 VKrishna04 eVidya Tech Courses Platform. All rights
+							reserved.
+						</p>
+					</div>
+					<div class="col-md-4 text-md-end">
+						<a href="#" class="text-white me-3"><i class="fab fa-github"></i></a>
+						<a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+						<a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- Bootstrap JS Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Load scripts after DOM is ready -->
+		<script src="./js/storage.js"></script>
+		<script src="./data/course-data.js"></script>
+		<script src="./js/progress-tracker.js"></script>
+		 <script src="./js/home.js"></script>
+
+		<!-- Add debugging script to check if elements and data are available -->
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				// Add a direct event listener for the view courses button
+				const viewCoursesBtn = document.getElementById("view-courses-btn");
+				if (viewCoursesBtn) {
+					viewCoursesBtn.addEventListener("click", function (e) {
+						e.preventDefault();
+						const coursesPath = "./pages/catalogue.html";
+						console.log("Navigating to courses page:", coursesPath);
+						window.location.href = coursesPath;
+					});
+				}
+
+				// Display number of available courses if data is available
+				if (window.courses && window.courses.courses) {
+					const courseCount = window.courses.courses.length;
+
+					// Update course count in the stats section
+					const courseCountElement = document.getElementById("course-count");
+					if (courseCountElement) {
+						courseCountElement.textContent = courseCount;
+					}
+
+					// Create a course stats summary
+					const courseStatsDiv = document.getElementById("course-stats");
+					if (courseStatsDiv) {
+						let totalVideos = 0;
+						let totalQuizzes = 0;
+
+						// Count total videos and quizzes
+						window.courses.courses.forEach(course => {
+							course.sections.forEach(section => {
+								if (section.videos) totalVideos += section.videos.length;
+								if (section.quiz) totalQuizzes++;
+							});
+						});
+
+						courseStatsDiv.innerHTML = `
+							<div class="alert alert-info">
+								<i class="fas fa-info-circle me-2"></i>
+								<strong>${courseCount}</strong> courses available with
+								<strong>${totalVideos}</strong> video lessons and
+								<strong>${totalQuizzes}</strong> interactive quizzes!
+							</div>
+						`;
+					}
+				 }
+
+				 // Get real metrics from course-data.js
+				if (typeof getCourses === 'function') {
+					const courses = getCourses();
+
+					// Calculate metrics
+					let videosCount = 0;
+					let quizzesCount = 0;
+
+					// Loop through courses to count videos and quizzes
+					courses.forEach(course => {
+						if (course.sections) {
+							course.sections.forEach(section => {
+								if (section.videos) videosCount += section.videos.length;
+								if (section.quiz) quizzesCount++;
+							});
+						}
+					});
+
+					// Update metrics display with real data
+					document.getElementById('courses-count').textContent = courses.length;
+					document.getElementById('videos-count').textContent = videosCount;
+					document.getElementById('quizzes-count').textContent = quizzesCount;
+				}
+
+				// Load featured courses on the homepage
+				if (typeof loadFeaturedCourses === 'function') {
+					loadFeaturedCourses();
+				}
+
+				// Debugging script to check if elements and data are available
+				console.log("Index page loaded, checking metrics elements:");
+
+				// Check if metrics elements exist
+				const coursesCount = document.getElementById('courses-count');
+				const videosCount = document.getElementById('videos-count');
+				const quizzesCount = document.getElementById('quizzes-count');
+
+				console.log("Metrics elements found:", {
+					coursesCount: !!coursesCount,
+					videosCount: !!videosCount,
+					quizzesCount: !!quizzesCount
+				});
+
+				// Check if courses data is available
+				console.log("Courses data availability:", {
+					windowCourses: !!window.courses,
+					coursesLength: window.courses ? window.courses.length : 0
+				});
+			});
+		</script>
+	</body>
+</html>

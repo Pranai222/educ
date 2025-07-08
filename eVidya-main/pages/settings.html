@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Settings - eVidya</title>
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+		<!-- Google Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<!-- OpenDyslexic font for dyslexia-friendly reading -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="../css/enhanced-buttons.css" />
+		<style>
+			:root {
+				--primary-hover: #0a58ca;
+				--settings-card-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+				--transition-speed: 0.25s;
+			}
+
+			/* Load OpenDyslexic font via CSS @font-face */
+			@font-face {
+				font-family: "OpenDyslexic";
+				src: url("https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-regular.woff")
+					format("woff");
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: "OpenDyslexic";
+				src: url("https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-bold.woff")
+					format("woff");
+				font-weight: bold;
+				font-style: normal;
+			}
+
+			body {
+				font-family: "Poppins", sans-serif;
+				background-color: #f9fafb;
+			}
+
+			/* Add dyslexic-friendly class that can be toggled */
+			body.dyslexic-friendly {
+				font-family: "OpenDyslexic", sans-serif;
+				line-height: 1.5;
+				letter-spacing: 0.2px;
+				word-spacing: 2px;
+			}
+
+			header {
+				background: linear-gradient(135deg, var(--primary-color), #0d47a1);
+				padding: 3rem 0;
+				margin-bottom: 0;
+				position: relative;
+				overflow: hidden;
+			}
+
+			header::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: radial-gradient(
+					circle at top right,
+					rgba(255, 255, 255, 0.2),
+					transparent 70%
+				);
+				pointer-events: none;
+			}
+
+			.settings-container {
+				max-width: 950px;
+				margin: 0 auto;
+			}
+
+			.settings-nav {
+				background: white;
+				border-radius: 12px;
+				box-shadow: var(--settings-card-shadow);
+				padding: 1rem;
+				margin-bottom: 1.5rem;
+				position: sticky;
+				top: 20px;
+				z-index: 10;
+			}
+
+			.settings-nav-items {
+				display: flex;
+				justify-content: space-between;
+				gap: 0.5rem;
+				overflow-x: auto;
+			}
+
+			.settings-nav-link {
+				color: #555;
+				text-decoration: none;
+				padding: 0.7rem 1rem;
+				border-radius: 8px;
+				font-weight: 500;
+				white-space: nowrap;
+				transition: all var(--transition-speed);
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+			}
+
+			.settings-nav-link:hover {
+				color: var(--primary-color);
+				background-color: rgba(13, 110, 253, 0.05);
+			}
+
+			.settings-nav-link.active {
+				color: var(--primary-color);
+				background-color: rgba(13, 110, 253, 0.1);
+			}
+
+			.settings-card {
+				background: #fff;
+				border-radius: 12px;
+				box-shadow: var(--settings-card-shadow);
+				padding: 2.2rem;
+				margin-bottom: 2rem;
+				transition: transform var(--transition-speed);
+				border: 1px solid rgba(0, 0, 0, 0.03);
+				scroll-margin-top: 100px;
+			}
+
+			.settings-card:hover {
+				transform: translateY(-3px);
+			}
+
+			.settings-card h3 {
+				margin-bottom: 1.8rem;
+				color: var(--primary-color);
+				border-bottom: 1px solid #f0f0f0;
+				padding-bottom: 1rem;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				gap: 0.8rem;
+			}
+
+			.settings-card h3 i {
+				font-size: 1.2rem;
+				opacity: 0.8;
+			}
+
+			.form-group {
+				margin-bottom: 1.8rem;
+				position: relative;
+			}
+
+			.form-label {
+				font-weight: 500;
+				margin-bottom: 0.7rem;
+				display: block;
+				color: #333;
+			}
+
+			.form-text {
+				font-size: 0.85rem;
+				color: #6c757d;
+				margin-top: 0.5rem;
+				line-height: 1.4;
+			}
+
+			.form-select,
+			.form-control {
+				border-radius: 8px;
+				border: 1px solid #dee2e6;
+				padding: 0.6rem 1rem;
+				transition: all var(--transition-speed);
+			}
+
+			.form-select:focus,
+			.form-control:focus {
+				border-color: var(--primary-color);
+				box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+			}
+
+			.settings-footer {
+				display: flex;
+				justify-content: flex-end;
+				gap: 1rem;
+				margin-top: 1.5rem;
+				padding-top: 1rem;
+				border-top: 1px solid #f0f0f0;
+			}
+
+			.api-status {
+				display: inline-block;
+				padding: 0.25rem 0.6rem;
+				border-radius: 50px;
+				font-size: 0.75rem;
+				font-weight: 500;
+				margin-left: 0.5rem;
+				transition: all var(--transition-speed);
+			}
+
+			.status-active {
+				background-color: #d1e7dd;
+				color: #0f5132;
+			}
+
+			.status-inactive {
+				background-color: #f8d7da;
+				color: #842029;
+			}
+
+			.input-group {
+				border-radius: 8px;
+				overflow: hidden;
+			}
+
+			.input-group-text {
+				cursor: pointer;
+				transition: all 0.2s;
+				background-color: #f8f9fa;
+				border-color: #dee2e6;
+			}
+
+			.input-group-text:hover {
+				background-color: #e9ecef;
+			}
+
+			.get-api-link {
+				display: block;
+				margin-top: 0.8rem;
+				font-size: 0.85rem;
+				color: var(--primary-color);
+				text-decoration: none;
+				transition: all var(--transition-speed);
+			}
+
+			.get-api-link:hover {
+				color: var(--primary-hover);
+				text-decoration: underline;
+			}
+
+			.btn {
+				border-radius: 6px;
+				padding: 0.5rem 1rem;
+				transition: all var(--transition-speed);
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-weight: 500;
+			}
+
+			.btn-primary {
+				background-color: var(--primary-color);
+				border-color: var(--primary-color);
+			}
+
+			.btn-primary:hover {
+				background-color: var(--primary-hover);
+				border-color: var(--primary-hover);
+				transform: translateY(-2px);
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			}
+
+			.btn-outline-primary {
+				color: var(--primary-color);
+				border-color: var(--primary-color);
+			}
+
+			.btn-outline-primary:hover {
+				background-color: var(--primary-color);
+				color: white;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			}
+
+			.btn-outline-secondary,
+			.btn-outline-danger,
+			.btn-outline-success {
+				transform: translateY(0);
+				transition: transform var(--transition-speed),
+					box-shadow var(--transition-speed),
+					background-color var(--transition-speed);
+			}
+
+			.btn-outline-secondary:hover,
+			.btn-outline-danger:hover,
+			.btn-outline-success:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			}
+
+			.form-check-input {
+				width: 1.1em;
+				height: 1.1em;
+				margin-top: 0.25em;
+				transition: all var(--transition-speed);
+			}
+
+			.form-check-input:checked {
+				background-color: var(--primary-color);
+				border-color: var(--primary-color);
+			}
+
+			.form-range {
+				height: 0.8rem;
+				padding: 0;
+			}
+
+			.form-range::-webkit-slider-thumb {
+				background: var(--primary-color);
+				transition: all var(--transition-speed);
+			}
+
+			.form-range::-webkit-slider-thumb:active {
+				transform: scale(1.2);
+			}
+
+			.data-management-btn {
+				position: relative;
+				overflow: hidden;
+				z-index: 1;
+				transition: all var(--transition-speed);
+				border-width: 1px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				padding: 0.75rem 1rem;
+				font-weight: 500;
+				border-radius: 8px;
+			}
+
+			.data-management-btn::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(
+					rgba(255, 255, 255, 0.1),
+					rgba(255, 255, 255, 0)
+				);
+				z-index: -1;
+				opacity: 0;
+				transition: opacity var(--transition-speed);
+			}
+
+			.data-management-btn:hover::after {
+				opacity: 1;
+			}
+
+			.data-management-btn i {
+				font-size: 1rem;
+			}
+
+			.section-heading {
+				font-size: 1.75rem;
+				margin-bottom: 1rem;
+				color: #333;
+				font-weight: 600;
+				margin-top: 2rem;
+			}
+
+			.section-description {
+				color: #666;
+				margin-bottom: 2rem;
+				font-size: 1.1rem;
+			}
+
+			.alert {
+				border-radius: 8px;
+			}
+
+			/* Custom switch styling */
+			.form-switch .form-check-input {
+				width: 2.5em;
+				height: 1.25em;
+			}
+
+			.form-check-label {
+				padding-left: 0.3rem;
+			}
+
+			/* Animate settings cards */
+			.settings-card {
+				animation: fadeIn 0.5s ease-out;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			/* Font preview styles */
+			.font-preview {
+				padding: 15px;
+				margin-top: 15px;
+				border-radius: 8px;
+				background-color: #f8f9fa;
+				border: 1px solid #dee2e6;
+			}
+
+			.font-preview.dyslexic {
+				font-family: "OpenDyslexic", sans-serif;
+			}
+
+			.font-preview.regular {
+				font-family: "Poppins", sans-serif;
+			}
+
+			/* Responsive adjustments */
+			@media (max-width: 768px) {
+				.settings-card {
+					padding: 1.5rem;
+				}
+
+				.settings-nav-items {
+					justify-content: flex-start;
+				}
+
+				.settings-footer {
+					flex-direction: column;
+				}
+
+				.settings-footer .btn {
+					width: 100%;
+					justify-content: center;
+				}
+
+				.section-heading {
+					font-size: 1.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<div class="container">
+					<a class="navbar-brand" href="../index.html">
+						<h2>eVidya Learning</h2>
+					</a>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarMain"
+						aria-controls="navbarMain"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarMain">
+						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="../index.html">
+									<i class="fas fa-home me-1"></i> Home
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./catalogue.html">
+									<i class="fas fa-book me-1"></i> Courses
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="./profile.html">
+									<i class="fas fa-user me-1"></i> Profile
+								</a>
+							</li>
+							<li class="nav-item">
+								<a
+									class="nav-link active"
+									href="./settings.html"
+								>
+									<i class="fas fa-cog me-1"></i> Settings
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+
+			<div class="container mt-4">
+				<h1 class="text-center text-white mb-2">User Settings</h1>
+				<p class="lead text-center text-white">
+					Customize your learning experience and manage your preferences
+				</p>
+			</div>
+		</header>
+
+		<main class="container py-5">
+			<div class="settings-container">
+				<!-- Settings Navigation -->
+				<div class="settings-nav">
+					<div class="settings-nav-items">
+						<a href="#api-settings" class="settings-nav-link active">
+							<i class="fas fa-key"></i> API Integration
+						</a>
+						<a href="#appearance-settings" class="settings-nav-link">
+							<i class="fas fa-palette"></i> Appearance
+						</a>
+						<a href="#learning-settings" class="settings-nav-link">
+							<i class="fas fa-graduation-cap"></i> Learning
+						</a>
+						<a href="#profile-settings" class="settings-nav-link">
+							<i class="fas fa-user-circle"></i> Profile
+						</a>
+						<a href="#data-settings" class="settings-nav-link">
+							<i class="fas fa-database"></i> Data
+						</a>
+					</div>
+				</div>
+
+				<h2 class="section-heading"><i class="fas fa-sliders-h me-2"></i>Settings & Preferences</h2>
+				<p class="section-description">Personalize your learning environment and manage your account settings.</p>
+
+				<div id="api-settings" class="settings-card">
+					<h3><i class="fas fa-key"></i> API Integration Settings</h3>
+					<p>
+						Configure API keys to enhance your learning experience
+						with additional features and AI-powered tools.
+					</p>
+
+					<!-- Gemini API Settings -->
+					<div class="form-group">
+						<label class="form-label">
+							Google Gemini API
+							<span
+								id="gemini-status"
+								class="api-status status-inactive"
+								>Inactive</span
+							>
+						</label>
+						<div class="input-group">
+							<input
+								type="password"
+								id="gemini-api-key"
+								class="form-control"
+								placeholder="Enter your Gemini API Key"
+							/>
+							<span
+								class="input-group-text"
+								id="toggle-gemini-visibility"
+							>
+								<i class="fas fa-eye-slash"></i>
+							</span>
+						</div>
+						<div class="form-text">
+							Used for AI-assisted learning features like
+							personalized explanations, answering questions, and generating learning reports.
+							<a
+								href="https://ai.google.dev/"
+								target="_blank"
+								class="get-api-link"
+								>Get your Gemini API key
+								<i class="fas fa-external-link-alt ms-1"></i></a
+							>
+						</div>
+					</div>
+
+					<div
+						id="api-message"
+						class="alert alert-info d-none"
+					></div>
+
+					<div class="settings-footer">
+						<button
+							id="clear-image-cache"
+							class="btn btn-outline-secondary"
+						>
+							<i class="fas fa-broom me-1"></i>
+							Clear Image Cache
+						</button>
+						<button
+							id="reset-api-key"
+							class="btn btn-outline-danger"
+						>
+							<i class="fas fa-trash-alt me-1"></i>
+							Reset API Key
+						</button>
+						<button id="save-api-key" class="btn btn-primary">
+							<i class="fas fa-save me-1"></i>
+							Save Changes
+						</button>
+					</div>
+				</div>
+
+				<div id="appearance-settings" class="settings-card">
+					<h3><i class="fas fa-palette"></i> Appearance Settings</h3>
+					<p>Customize how the platform looks to match your preferences and improve readability.</p>
+
+					<!-- Theme Preference -->
+					<div class="form-group">
+						<label class="form-label">Theme Preference</label>
+						<select id="theme-preference" class="form-select">
+							<option value="light">Light</option>
+							<option value="dark">Dark</option>
+							<option value="system">System Default</option>
+						</select>
+						<div class="form-text">
+							Choose your preferred theme for the application. System default will follow your device settings.
+						</div>
+					</div>
+
+					<!-- Font Size -->
+					<div class="form-group">
+						<label class="form-label">Text Size</label>
+						<div class="d-flex align-items-center">
+							<span class="me-3 text-muted"><small>Smaller</small></span>
+							<input type="range" class="form-range w-75" id="text-size-slider" min="80" max="120" step="5" value="100">
+							<span class="ms-3" id="text-size-value">100%</span>
+							<span class="ms-3 text-muted"><small>Larger</small></span>
+						</div>
+						<div class="form-text">
+							Adjust the text size across the platform for comfortable reading.
+						</div>
+					</div>
+
+					<!-- Text Spacing -->
+					<div class="form-group">
+						<label class="form-label">Reading Comfort</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="enable-line-spacing">
+							<label class="form-check-label" for="enable-line-spacing">
+								Increased line spacing
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="enable-dyslexia-font">
+							<label class="form-check-label" for="enable-dyslexia-font">
+								Dyslexia-friendly font
+							</label>
+						</div>
+						<div class="form-text">
+							These options can make reading course content more comfortable for extended periods.
+						</div>
+					</div>
+
+					<div class="row mt-3">
+						<div class="col-md-6">
+							<div class="font-preview regular">
+								<h6>Regular Font</h6>
+								<p>This is how text looks with the default font. The quick brown fox jumps over the lazy dog.</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="font-preview dyslexic">
+								<h6>OpenDyslexic Font</h6>
+								<p>This is how text looks with the dyslexic font. The quick brown fox jumps over the lazy dog.</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="settings-footer">
+						<button id="save-appearance-settings" class="btn btn-primary">
+							<i class="fas fa-save me-1"></i>
+							Save Changes
+						</button>
+					</div>
+				</div>
+
+				<div id="learning-settings" class="settings-card">
+					<h3><i class="fas fa-graduation-cap"></i> Learning Preferences</h3>
+					<p>Adjust how course content is presented and tailor your learning experience.</p>
+
+					<!-- Study Mode -->
+					<div class="form-group">
+						<label class="form-label">Study Mode</label>
+						<select id="study-mode" class="form-select">
+							<option value="standard">Standard</option>
+							<option value="focus">Focus Mode (Hide Distractions)</option>
+							<option value="interactive">Interactive Mode (More Activities)</option>
+						</select>
+						<div class="form-text">
+							Controls how course content is presented to you. Focus mode minimizes distractions, while Interactive mode includes more practice exercises.
+						</div>
+					</div>
+
+					<!-- Learning Pace -->
+					<div class="form-group">
+						<label class="form-label">Learning Pace</label>
+						<select id="learning-pace" class="form-select"></select>
+							<option value="self">Self-Paced (Default)</option>
+							<option value="structured">Structured Schedule</option>
+							<option value="accelerated">Accelerated Learning</option>
+						</select>
+						<div class="form-text">
+							How you prefer to progress through courses. Structured provides a recommended timeline, while Accelerated focuses on key concepts.
+						</div>
+					</div>
+
+					<!-- Content Preferences -->
+					<div class="form-group">
+						<label class="form-label">Content Preferences</label>
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" id="prefer-video" checked>
+							<label class="form-check-label" for="prefer-video">Prioritize video content</label>
+						</div>
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" id="prefer-examples" checked>
+							<label class="form-check-label" for="prefer-examples">Show more examples</label>
+						</div>
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" id="auto-play-videos">
+							<label class="form-check-label" for="auto-play-videos">Auto-play videos</label>
+						</div>
+					</div>
+
+					<div class="settings-footer">
+						<button id="save-learning-settings" class="btn btn-primary">
+							<i class="fas fa-save me-1"></i>
+							Save Changes
+						</button>
+					</div>
+				</div>
+
+				<div id="profile-settings" class="settings-card">
+					<h3><i class="fas fa-user-circle"></i> User Profile</h3>
+					<p>Update your personal information and learning interests to improve your experience.</p>
+
+					<!-- Username -->
+					<div class="form-group">
+						<label class="form-label">Display Name</label>
+						<input type="text" id="display-name" class="form-control" placeholder="Your display name">
+						<div class="form-text">
+							This name will be shown throughout the platform and in your reports.
+						</div>
+					</div>
+
+					<!-- Learning Focus -->
+					<div class="form-group">
+						<label class="form-label">Learning Interests</label>
+						<select id="learning-interests" class="form-select" multiple size="4">
+							<option value="programming">Programming</option>
+							<option value="data-science">Data Science</option>
+							<option value="design">Design</option>
+							<option value="business">Business</option>
+							<option value="marketing">Marketing</option>
+							<option value="personal-development">Personal Development</option>
+						</select>
+						<div class="form-text">
+							Hold Ctrl/Cmd to select multiple interests. This helps us recommend relevant courses and content.
+						</div>
+					</div>
+
+					<div class="settings-footer">
+						<button id="save-profile-settings" class="btn btn-primary">
+							<i class="fas fa-save me-1"></i>
+							Save Changes
+						</button>
+					</div>
+				</div>
+
+				<div id="data-settings" class="settings-card">
+					<h3><i class="fas fa-database"></i> Data Management</h3>
+					<p>Export, import or reset your learning data. Useful when switching devices or creating backups.</p>
+
+					<div class="form-group">
+						<label class="form-label">Course Progress Data</label>
+						<div class="row g-3">
+							<div class="col-md-4">
+								<button id="export-progress" class="data-management-btn btn btn-outline-primary w-100">
+									<i class="fas fa-download"></i>
+									Export Progress Data
+								</button>
+							</div>
+							<div class="col-md-4">
+								<button id="import-progress" class="data-management-btn btn btn-outline-success w-100">
+									<i class="fas fa-upload"></i>
+									Import Progress Data
+								</button>
+							</div>
+							<div class="col-md-4">
+								<button id="reset-all-progress" class="data-management-btn btn btn-outline-danger w-100">
+									<i class="fas fa-trash"></i>
+									Reset All Progress
+								</button>
+							</div>
+						</div>
+						<div class="form-text mt-3">
+							<i class="fas fa-info-circle me-1"></i> Export saves only courses with progress as a JSON file. When importing, existing progress is preserved except where overwritten by imported data.
+						</div>
+					</div>
+
+					<div class="alert alert-warning">
+						<div class="d-flex align-items-center">
+							<i class="fas fa-exclamation-triangle me-3 fs-4"></i>
+							<div>
+								<strong>Danger Zone</strong>
+								<p class="mb-2 mt-1">The following action will permanently delete ALL of your user data and cannot be undone.</p>
+								<button id="clear-all-data" class="btn btn-danger">
+									<i class="fas fa-exclamation-circle me-1"></i>
+									Clear All User Data
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<footer>
+			<div class="container">
+				<p>&copy; 2025 VKrishna04 eVidya Tech Courses. All rights reserved.</p>
+			</div>
+		</footer>
+
+		<!-- Bootstrap JS Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Load the config first -->
+		<script src="../js/config.js"></script>
+		<script>
+			// DOM elements
+			const geminiApiKeyInput = document.getElementById("gemini-api-key");
+			const geminiStatusEl = document.getElementById("gemini-status");
+			const saveApiKeyBtn = document.getElementById("save-api-key");
+			const resetApiKeyBtn = document.getElementById("reset-api-key");
+			const clearImageCacheBtn = document.getElementById("clear-image-cache");
+			const apiMessageEl = document.getElementById("api-message");
+
+			// Appearance settings elements
+			const themePreferenceSelect = document.getElementById("theme-preference");
+			const textSizeSlider = document.getElementById("text-size-slider");
+			const textSizeValue = document.getElementById("text-size-value");
+			const enableLineSpacing = document.getElementById("enable-line-spacing");
+			const enableDyslexiaFont = document.getElementById("enable-dyslexia-font");
+			const saveAppearanceBtn = document.getElementById("save-appearance-settings");
+
+			// Learning preferences elements
+			const studyModeSelect = document.getElementById("study-mode");
+			const learningPaceSelect = document.getElementById("learning-pace");
+			const preferVideoCheck = document.getElementById("prefer-video");
+			const preferExamplesCheck = document.getElementById("prefer-examples");
+			const autoPlayVideosCheck = document.getElementById("auto-play-videos");
+			const saveLearningBtn = document.getElementById("save-learning-settings");
+
+			// Notification settings elements
+			const notificationCourseUpdates = document.getElementById("notification-course-updates");
+			const notificationReminders = document.getElementById("notification-reminders");
+			const notificationAchievements = document.getElementById("notification-achievements");
+			const notificationPromotions = document.getElementById("notification-promotions");
+			const reminderFrequencySelect = document.getElementById("reminder-frequency");
+			const saveNotificationBtn = document.getElementById("save-notification-settings");
+
+			// User profile elements
+			const displayNameInput = document.getElementById("display-name");
+			const learningInterestsSelect = document.getElementById("learning-interests");
+			const saveProfileBtn = document.getElementById("save-profile-settings");
+
+			// Data management elements
+			const exportProgressBtn = document.getElementById("export-progress");
+			const importProgressBtn = document.getElementById("import-progress");
+			const resetAllProgressBtn = document.getElementById("reset-all-progress");
+			const clearAllDataBtn = document.getElementById("clear-all-data");
+
+			// Toggle password visibility
+			const toggleGeminiVisibility = document.getElementById("toggle-gemini-visibility");
+
+			// Settings navigation
+			const settingsNavLinks = document.querySelectorAll('.settings-nav-link');
+
+			// Load all settings from localStorage
+			function loadAllSettings() {
+				// Load API key
+				loadApiKey();
+
+				// Load appearance settings
+				loadAppearanceSettings();
+
+				// Load learning preferences
+				loadLearningPreferences();
+
+				// Load notification settings
+				loadNotificationSettings();
+
+				// Load user profile
+				loadUserProfile();
+
+				// Apply current appearance settings
+				applyAppearanceSettings();
+			}
+
+			// API key functions
+			function loadApiKey() {
+				const geminiApiKey = localStorage.getItem("gemini_api_key") || "";
+				geminiApiKeyInput.value = geminiApiKey;
+				updateGeminiStatus(geminiApiKey);
+			}
+
+			function updateGeminiStatus(apiKey) {
+				if (apiKey && apiKey.trim() !== "") {
+					geminiStatusEl.className = "api-status status-active";
+					geminiStatusEl.textContent = "Active";
+				} else {
+					geminiStatusEl.className = "api-status status-inactive";
+					geminiStatusEl.textContent = "Inactive";
+				}
+			}
+
+			function saveApiKey() {
+				const geminiApiKey = geminiApiKeyInput.value.trim();
+				localStorage.setItem("gemini_api_key", geminiApiKey);
+				updateGeminiStatus(geminiApiKey);
+				showMessage(apiMessageEl, "API key saved successfully!", "success");
+
+				// Dispatch an event so other components can react to the API key change
+				const event = new Event('gemini_api_key_updated');
+				window.dispatchEvent(event);
+			}
+
+			function resetApiKey() {
+				if (confirm("Are you sure you want to reset the API key? This action cannot be undone.")) {
+					geminiApiKeyInput.value = "";
+					localStorage.removeItem("gemini_api_key");
+					updateGeminiStatus("");
+					showMessage(apiMessageEl, "API key has been reset.", "info");
+
+					// Dispatch event for API key change
+					const event = new Event('gemini_api_key_updated');
+					window.dispatchEvent(event);
+				}
+			}
+
+			// Appearance settings functions
+			function loadAppearanceSettings() {
+				// Theme preference
+				const theme = localStorage.getItem("theme_preference") || "light";
+				themePreferenceSelect.value = theme;
+
+				// Text size
+				const textSize = localStorage.getItem("text_size") || "100";
+				textSizeSlider.value = textSize;
+				textSizeValue.textContent = textSize + "%";
+
+				// Reading comfort
+				enableLineSpacing.checked = localStorage.getItem("enable_line_spacing") === "true";
+				enableDyslexiaFont.checked = localStorage.getItem("enable_dyslexia_font") === "true";
+			}
+
+			function saveAppearanceSettings() {
+				// Save theme
+				localStorage.setItem("theme_preference", themePreferenceSelect.value);
+
+				// Save text size
+				localStorage.setItem("text_size", textSizeSlider.value);
+
+				// Save reading comfort settings
+				localStorage.setItem("enable_line_spacing", enableLineSpacing.checked);
+				localStorage.setItem("enable_dyslexia_font", enableDyslexiaFont.checked);
+
+				// Apply settings immediately
+				applyAppearanceSettings();
+
+				// Show success message
+				showSettingsMessage(saveAppearanceBtn, "Appearance settings saved!");
+			}
+
+			function applyAppearanceSettings() {
+				// Apply theme
+				const theme = localStorage.getItem("theme_preference") || "light";
+				document.body.classList.remove("theme-light", "theme-dark");
+
+				if (theme === "dark") {
+					document.body.classList.add("theme-dark");
+				} else if (theme === "system") {
+					// Check system preference
+					if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+						document.body.classList.add("theme-dark");
+					}
+				} else {
+					document.body.classList.add("theme-light");
+				}
+
+				// Apply text size
+				const textSize = localStorage.getItem("text_size") || "100";
+				document.documentElement.style.fontSize = `${textSize}%`;
+
+				// Apply reading comfort settings
+				if (localStorage.getItem("enable_line_spacing") === "true") {
+					document.body.classList.add("increased-line-spacing");
+				} else {
+					document.body.classList.remove("increased-line-spacing");
+				}
+
+				if (localStorage.getItem("enable_dyslexia_font") === "true") {
+					document.documentElement.style.fontFamily = "'OpenDyslexic', sans-serif";
+				} else {
+					document.documentElement.style.fontFamily = "'Poppins', sans-serif";
+				}
+			}
+
+			// Learning preferences functions
+			function loadLearningPreferences() {
+				studyModeSelect.value = localStorage.getItem("study_mode") || "standard";
+				learningPaceSelect.value = localStorage.getItem("learning_pace") || "self";
+				preferVideoCheck.checked = localStorage.getItem("prefer_video") !== "false";
+				preferExamplesCheck.checked = localStorage.getItem("prefer_examples") !== "false";
+				autoPlayVideosCheck.checked = localStorage.getItem("auto_play_videos") === "true";
+			}
+
+			function saveLearningPreferences() {
+				localStorage.setItem("study_mode", studyModeSelect.value);
+				localStorage.setItem("learning_pace", learningPaceSelect.value);
+				localStorage.setItem("prefer_video", preferVideoCheck.checked);
+				localStorage.setItem("prefer_examples", preferExamplesCheck.checked);
+				localStorage.setItem("auto_play_videos", autoPlayVideosCheck.checked);
+
+				showSettingsMessage(saveLearningBtn, "Learning preferences saved!");
+			}
+
+			// Notification settings functions
+			function loadNotificationSettings() {
+				notificationCourseUpdates.checked = localStorage.getItem("notification_course_updates") !== "false";
+				notificationReminders.checked = localStorage.getItem("notification_reminders") !== "false";
+				notificationAchievements.checked = localStorage.getItem("notification_achievements") === "true";
+				notificationPromotions.checked = localStorage.getItem("notification_promotions") === "true";
+				reminderFrequencySelect.value = localStorage.getItem("reminder_frequency") || "daily";
+			}
+
+			function saveNotificationSettings() {
+				localStorage.setItem("notification_course_updates", notificationCourseUpdates.checked);
+				localStorage.setItem("notification_reminders", notificationReminders.checked);
+				localStorage.setItem("notification_achievements", notificationAchievements.checked);
+				localStorage.setItem("notification_promotions", notificationPromotions.checked);
+				localStorage.setItem("reminder_frequency", reminderFrequencySelect.value);
+
+				showSettingsMessage(saveNotificationBtn, "Notification settings saved!");
+			}
+
+			// User profile functions
+			function loadUserProfile() {
+				// Load display name
+				displayNameInput.value = localStorage.getItem("display_name") || localStorage.getItem("profileName") || "";
+
+				// Load learning interests
+				const interests = localStorage.getItem("learning_interests");
+				if (interests) {
+					const interestsArray = JSON.parse(interests);
+
+					// Select all options that match the interests
+					Array.from(learningInterestsSelect.options).forEach(option => {
+						option.selected = interestsArray.includes(option.value);
+					});
+				}
+			}
+
+			function saveUserProfile() {
+				// Save display name
+				localStorage.setItem("display_name", displayNameInput.value);
+				localStorage.setItem("profileName", displayNameInput.value);
+
+				// Save learning interests
+				const selectedInterests = Array.from(learningInterestsSelect.selectedOptions).map(option => option.value);
+				localStorage.setItem("learning_interests", JSON.stringify(selectedInterests));
+
+				showSettingsMessage(saveProfileBtn, "Profile saved successfully!");
+
+				// Update display name across the site
+				updateDisplayName();
+			}
+
+			function updateDisplayName() {
+				const name = localStorage.getItem("display_name");
+				if (name) {
+					// This would update any elements showing the user's name
+					// For example, if there's a user-name element in the header
+					const userNameElements = document.querySelectorAll(".user-name");
+					userNameElements.forEach(el => {
+						el.textContent = name;
+					});
+				}
+			}
+
+			// Data management functions
+			function exportProgressData() {
+				const rawCourseProgress = localStorage.getItem("courseProgress");
+				const courseProgress = JSON.parse(rawCourseProgress || "{}");
+
+				// Only include courses that have actual progress
+				const filteredCourseProgress = {};
+				Object.keys(courseProgress).forEach(courseId => {
+					// Check if this course has any progress
+					if (courseProgress[courseId].completedItems > 0) {
+						filteredCourseProgress[courseId] = courseProgress[courseId];
+					}
+				});
+
+				// Get other learning-related data
+				const rawCompletedLessons = localStorage.getItem("completedLessons");
+				const rawCompletedQuizzes = localStorage.getItem("completedQuizzes");
+				const rawWatchedVideos = localStorage.getItem("watchedVideos");
+
+				// Include user profile data
+				const profileName = localStorage.getItem("profileName");
+				const profileEmail = localStorage.getItem("profileEmail");
+
+				const progressData = {
+					courseProgress: filteredCourseProgress,
+					completedLessons: JSON.parse(rawCompletedLessons || "{}"),
+					completedQuizzes: JSON.parse(rawCompletedQuizzes || "{}"),
+					watchedVideos: JSON.parse(rawWatchedVideos || "{}"),
+					profileName: profileName || '',
+					profileEmail: profileEmail || '',
+					timestamp: new Date().toISOString()
+				};
+
+				// Create a blob and download link
+				const dataStr = JSON.stringify(progressData, null, 2);
+				const dataBlob = new Blob([dataStr], { type: "application/json" });
+				const url = URL.createObjectURL(dataBlob);
+
+				// Create and trigger download
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = `eVidya_learning_data_${new Date().toLocaleDateString().replace(/\//g, "-")}.json`;
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+				URL.revokeObjectURL(url);
+
+				showMessage(apiMessageEl, "Learning data exported successfully! Only courses with progress were included.", "success");
+			}
+
+			function importProgressData() {
+				const input = document.createElement("input");
+				input.type = "file";
+				input.accept = "application/json";
+
+				input.addEventListener("change", function() {
+					const file = input.files[0];
+					if (file) {
+						const reader = new FileReader();
+						reader.onload = function(event) {
+							try {
+								const importedData = JSON.parse(event.target.result);
+
+								// For each data type, merge with existing data rather than replacing entirely
+								if (importedData.courseProgress) {
+									// Get existing course progress
+									const existingProgress = JSON.parse(localStorage.getItem("courseProgress") || "{}");
+
+									// Merge imported progress with existing progress
+									// Imported data will overwrite existing data for the same courses
+									const mergedProgress = { ...existingProgress, ...importedData.courseProgress };
+									localStorage.setItem("courseProgress", JSON.stringify(mergedProgress));
+								}
+
+								// Do the same for other progress data
+								if (importedData.completedLessons) {
+									const existing = JSON.parse(localStorage.getItem("completedLessons") || "{}");
+									localStorage.setItem("completedLessons", JSON.stringify({ ...existing, ...importedData.completedLessons }));
+								}
+
+								if (importedData.completedQuizzes) {
+									const existing = JSON.parse(localStorage.getItem("completedQuizzes") || "{}");
+									localStorage.setItem("completedQuizzes", JSON.stringify({ ...existing, ...importedData.completedQuizzes }));
+								}
+
+								if (importedData.watchedVideos) {
+									const existing = JSON.parse(localStorage.getItem("watchedVideos") || "{}");
+									localStorage.setItem("watchedVideos", JSON.stringify({ ...existing, ...importedData.watchedVideos }));
+								}
+
+								// Import profile data if not already set
+								if (importedData.profileName && !localStorage.getItem("profileName")) {
+									localStorage.setItem("profileName", importedData.profileName);
+								}
+
+								if (importedData.profileEmail && !localStorage.getItem("profileEmail")) {
+									localStorage.setItem("profileEmail", importedData.profileEmail);
+								}
+
+								showMessage(apiMessageEl, "Learning data imported and merged successfully!", "success");
+							} catch (error) {
+								console.error("Error importing data:", error);
+								showMessage(apiMessageEl, "Error reading progress data file. Please ensure it is a valid eVidya export.", "danger");
+							}
+						};
+						reader.readAsText(file);
+					}
+				});
+
+				input.click();
+			}
+
+			function resetAllProgress() {
+				if (confirm("Are you sure you want to reset ALL course progress? This cannot be undone.")) {
+					localStorage.removeItem("courseProgress");
+					localStorage.removeItem("completedLessons");
+					localStorage.removeItem("completedQuizzes");
+					localStorage.removeItem("watchedVideos");
+
+					showMessage(apiMessageEl, "All course progress has been reset.", "warning");
+				}
+			}
+
+			function clearAllUserData() {
+				if (confirm("⚠️ WARNING: This will delete ALL your user data including progress, settings, and preferences. This action CANNOT be undone. Are you absolutely sure?")) {
+					// Get current API key before clearing (optional, in case we want to preserve it)
+					const apiKey = localStorage.getItem("gemini_api_key");
+
+					// Clear all localStorage
+					localStorage.clear();
+
+					// Optionally restore API key if needed
+					if (apiKey && confirm("Would you like to keep your Gemini API key?")) {
+						localStorage.setItem("gemini_api_key", apiKey);
+					}
+
+					showMessage(apiMessageEl, "All user data has been cleared. The page will reload.", "warning");
+
+					// Reload page after a short delay
+					setTimeout(() => {
+						window.location.reload();
+					}, 2000);
+				}
+			}
+
+			// Utility functions
+			function togglePasswordVisibility(inputEl, toggleEl) {
+				const type = inputEl.getAttribute("type") === "password" ? "text" : "password";
+				inputEl.setAttribute("type", type);
+
+				// Toggle icon
+				const iconEl = toggleEl.querySelector("i");
+				if (type === "text") {
+					iconEl.className = "fas fa-eye";
+				} else {
+					iconEl.className = "fas fa-eye-slash";
+				}
+			}
+
+			function showMessage(element, message, type) {
+				element.textContent = message;
+				element.className = `alert alert-${type}`;
+				element.classList.remove("d-none");
+
+				// Hide after 5 seconds
+				setTimeout(() => {
+					element.classList.add("d-none");
+				}, 5000);
+			}
+
+			function showSettingsMessage(buttonElement, message) {
+				// Create a temporary success message
+				const messageEl = document.createElement("div");
+				messageEl.className = "alert alert-success mt-3";
+				messageEl.innerHTML = `<i class="fas fa-check-circle me-2"></i> ${message}`;
+
+				// Insert after the button's parent (settings-footer)
+				const parentEl = buttonElement.closest(".settings-footer");
+				parentEl.parentNode.insertBefore(messageEl, parentEl.nextSibling);
+
+				// Remove after 3 seconds
+				setTimeout(() => {
+					messageEl.remove();
+				}, 3000);
+			}
+
+			// Text size slider update
+			textSizeSlider.addEventListener("input", function() {
+				textSizeValue.textContent = this.value + "%";
+				document.documentElement.style.fontSize = `${this.value}%`;
+			});
+
+			// Settings navigation
+			settingsNavLinks.forEach(link => {
+				link.addEventListener('click', function(e) {
+					// Update active state
+					settingsNavLinks.forEach(l => l.classList.remove('active'));
+					this.classList.add('active');
+				});
+			});
+
+			// Add smooth scrolling to settings navigation
+			document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+				anchor.addEventListener('click', function (e) {
+					e.preventDefault();
+
+					document.querySelector(this.getAttribute('href')).scrollIntoView({
+						behavior: 'smooth'
+					});
+				});
+			});
+
+			// Event listeners
+			document.addEventListener("DOMContentLoaded", function() {
+				// Load all settings
+				loadAllSettings();
+
+				// API key
+				saveApiKeyBtn.addEventListener("click", saveApiKey);
+				resetApiKeyBtn.addEventListener("click", resetApiKey);
+				toggleGeminiVisibility.addEventListener("click", () => togglePasswordVisibility(geminiApiKeyInput, toggleGeminiVisibility));
+
+				// Clear image cache
+				clearImageCacheBtn.addEventListener("click", function() {
+					if (confirm("Are you sure you want to clear the image cache? This will reset all course thumbnail images.")) {
+						const clearedCount = config.images.clearImageCache();
+						showMessage(apiMessageEl, `Image cache cleared successfully (${clearedCount} images). Refresh pages to see new images.`, "info");
+					}
+				});
+
+				// Appearance settings
+				saveAppearanceBtn.addEventListener("click", saveAppearanceSettings);
+
+				// Learning preferences
+				saveLearningBtn.addEventListener("click", saveLearningPreferences);
+
+				// Notification settings
+				if (saveNotificationBtn) {
+					saveNotificationBtn.addEventListener("click", saveNotificationSettings);
+				}
+
+				// User profile
+				saveProfileBtn.addEventListener("click", saveUserProfile);
+
+				// Data management
+				exportProgressBtn.addEventListener("click", exportProgressData);
+				importProgressBtn.addEventListener("click", importProgressData);
+				resetAllProgressBtn.addEventListener("click", resetAllProgress);
+				clearAllDataBtn.addEventListener("click", clearAllUserData);
+
+				// Check for system dark mode changes
+				if (window.matchMedia) {
+					window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyAppearanceSettings);
+				}
+
+				// Highlight current section in navigation when scrolling
+				window.addEventListener('scroll', function() {
+					const sections = document.querySelectorAll('.settings-card');
+					let currentSection = '';
+
+					sections.forEach(section => {
+						const sectionTop = section.offsetTop;
+						const sectionHeight = section.clientHeight;
+						if (pageYOffset >= (sectionTop - 150)) {
+							currentSection = section.getAttribute('id');
+						}
+					});
+
+					if (currentSection) {
+						settingsNavLinks.forEach(link => {
+							link.classList.remove('active');
+							if (link.getAttribute('href') === `#${currentSection}`) {
+								link.classList.add('active');
+							}
+						});
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
